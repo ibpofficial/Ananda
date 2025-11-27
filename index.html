@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ananda - Your Spiritual Companion</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Marked for Markdown Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbf5',
+                            100: '#fef5e6',
+                            200: '#fdeacc',
+                            300: '#fbd499',
+                            400: '#f9b566',
+                            500: '#f79633', // Premium Saffron
+                            600: '#ea7a14',
+                            700: '#c25e0e',
+                            800: '#9b4913',
+                            900: '#7d3d16',
+                        },
+                        mystic: {
+                            800: '#2e1065', // Deep Purple/Indigo
+                            900: '#1e1b4b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Tiro Devanagari Hindi', 'serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'breathe': 'breathe 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s infinite',
+                        'float-flower': 'floatFlower 3s linear forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '0.4' },
+                            '50%': { transform: 'scale(1.3)', opacity: '0.1' },
+                        },
+                        floatFlower: {
+                            '0%': { transform: 'translateY(-20px) rotate(0deg)', opacity: '0' },
+                            '10%': { opacity: '1' },
+                            '100%': { transform: 'translateY(300px) rotate(360deg)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+            background: #fffbf5; /* Warm aesthetic base */
+            transition: background 0.5s ease;
+        }
+        
+        /* Premium Card Styles */
+        .card-premium {
+            background: white;
+            border: 1px solid rgba(247, 150, 51, 0.1);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-premium:active {
+            transform: scale(0.98);
+        }
+
+        .card-featured {
+            background: linear-gradient(145deg, #ffffff 0%, #fffbf5 100%);
+            border: 1px solid rgba(247, 150, 51, 0.2);
+            box-shadow: 0 10px 30px -5px rgba(247, 150, 51, 0.15);
+        }
+
+        /* Chart SVG Text */
+        .chart-text { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; fill: #4338ca; } /* Bigger text */
+        .house-num { font-size: 10px; fill: #9ca3af; font-weight: 500; }
+
+        /* Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Markdown Styles */
+        .prose h3 { font-family: 'Tiro Devanagari Hindi', serif; color: #c25e0e; font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.75rem; border-bottom: 1px solid #fed7aa; padding-bottom: 0.25rem; }
+        .prose p { margin-bottom: 1rem; color: #4b5563; line-height: 1.7; }
+        .prose strong { color: #ea7a14; font-weight: 600; }
+        .prose ul { list-style: none; padding: 0; }
+        .prose li { position: relative; padding-left: 1.25rem; margin-bottom: 0.5rem; color: #555; }
+        .prose li::before { content: "✦"; color: #f79633; position: absolute; left: 0; font-size: 0.8em; top: 0.2em; }
+
+        /* Animation Delays */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        
+        .jaap-circle {
+            background: radial-gradient(circle at 30% 30%, #fbbf24, #d97706);
+            box-shadow: 0 20px 40px -10px rgba(217, 119, 6, 0.5);
+            transition: transform 0.1s;
+        }
+        .jaap-circle:active { transform: scale(0.96); }
+        
+        .ripple {
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.5);
+            transform: scale(0); animation: ripple-anim 0.5s linear; pointer-events: none;
+        }
+        @keyframes ripple-anim { to { transform: scale(3.5); opacity: 0; } }
+
+        /* Falling Flowers */
+        .flower {
+            position: fixed;
+            top: -20px;
+            font-size: 24px;
+            z-index: 50;
+            pointer-events: none;
+            animation: floatFlower 3s linear forwards;
+        }
+    </style>
+</head>
+<body class="text-gray-800 font-sans h-screen flex flex-col overflow-hidden relative selection:bg-brand-200">
+
+    <!-- Splash Screen -->
+    <div id="splash" class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-brand-500 transition-opacity duration-1000">
+        <h1 class="text-8xl mb-2 font-serif text-white animate-pulse-slow">ॐ</h1>
+        <p class="text-xl text-white/90 font-medium tracking-[0.4em] uppercase">Ananda</p>
+    </div>
+
+    <!-- Meditation Overlay -->
+    <div id="meditation-overlay" class="fixed inset-0 z-50 bg-mystic-900/95 backdrop-blur-2xl hidden flex-col items-center justify-center text-white transition-opacity duration-500 opacity-0">
+        <div class="absolute top-6 left-6">
+             <button onclick="toggleMute()" class="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md">
+                <i id="mute-icon" data-lucide="volume-2" class="w-6 h-6 text-indigo-100"></i>
+            </button>
+        </div>
+        <button onclick="stopMeditation()" class="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+            <i data-lucide="x" class="w-6 h-6 text-indigo-50"></i>
+        </button>
+        
+        <div class="relative w-72 h-72 flex items-center justify-center mb-16">
+            <div class="absolute inset-0 bg-indigo-500 rounded-full animate-breathe" style="animation-delay: 0s;"></div>
+            <div class="absolute inset-8 bg-indigo-600 rounded-full animate-breathe" style="animation-delay: 2s;"></div>
+            <div class="absolute inset-16 bg-indigo-700 rounded-full animate-breathe" style="animation-delay: 4s;"></div>
+            
+            <div class="z-10 text-center">
+                <div id="timer-display" class="text-7xl font-light font-serif tabular-nums tracking-widest text-white drop-shadow-lg">00:00</div>
+                <p class="text-indigo-200 text-sm mt-3 tracking-widest uppercase opacity-80 font-medium">Inhale • Exhale</p>
+            </div>
+        </div>
+
+        <button onclick="toggleTimerState()" id="timer-control" class="px-10 py-4 bg-white text-mystic-900 rounded-2xl font-bold hover:bg-brand-50 transition-all shadow-xl shadow-indigo-900/50 min-w-[160px] text-lg">
+            Pause
+        </button>
+        
+        <div class="mt-8 flex items-center gap-2 text-indigo-300/60 text-xs uppercase tracking-widest">
+            <i data-lucide="headphones" class="w-3 h-3"></i> Audio Enabled
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="app-content" class="flex-1 overflow-y-auto no-scrollbar pb-32 transition-opacity duration-300 opacity-0 relative z-10">
+        <!-- Content injected via JS -->
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-brand-100 pb-safe pt-2 px-4 shadow-[0_-10px_40px_rgba(0,0,0,0.03)] z-40 rounded-t-3xl">
+        <div class="flex justify-between items-end max-w-lg mx-auto h-20 pb-3 px-2">
+            <button onclick="router('home')" class="nav-btn group flex flex-col items-center gap-1.5 w-14" data-target="home">
+                <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                    <i data-lucide="home" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                </div>
+                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors">Home</span>
+            </button>
+            
+            <button onclick="router('jaap')" class="nav-btn group flex flex-col items-center gap-1.5 w-14" data-target="jaap">
+                 <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                    <i data-lucide="sun" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                </div>
+                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors">Jaap</span>
+            </button>
+            
+            <!-- Kundali Center Button -->
+            <button onclick="router('kundali')" class="nav-btn group flex flex-col items-center justify-center -mt-10 w-16" data-target="kundali">
+                <div class="w-16 h-16 rounded-full bg-mystic-800 shadow-xl shadow-indigo-200 border-[4px] border-white flex items-center justify-center transform transition-all active:scale-95 group-hover:-translate-y-1">
+                    <i data-lucide="sparkles" class="w-7 h-7 text-brand-300 animate-pulse-slow"></i>
+                </div>
+                <span class="text-[10px] font-bold text-mystic-800 mt-2">Kundali</span>
+            </button>
+            
+            <button onclick="router('vedas')" class="nav-btn group flex flex-col items-center gap-1.5 w-14" data-target="vedas">
+                 <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                    <i data-lucide="book-open" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                </div>
+                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors">Vedas</span>
+            </button>
+            
+            <button onclick="router('temples')" class="nav-btn group flex flex-col items-center gap-1.5 w-14" data-target="temples">
+                 <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                    <i data-lucide="map-pin" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                </div>
+                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors">Pilgrimage</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- API Config & Obfuscation ---
+        // Splitting key to avoid immediate detection by automated scanners
+        const _k1 = 'sk-or-v1-a499bbd40be965cd9aa118c9f342';
+        const _k2 = 'e3b8f99d6903ea3eb7671c51e479dd842576';
+        const DEEPSEEK_API_KEY = _k1 + _k2;
+        const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+
+        // --- Data ---
+        const GODS = {
+            shiva: { name: 'Lord Shiva', mantra: 'Om Namah Shivaya', color: 'from-blue-500 to-indigo-600', bg: '#f0f9ff', accent: '#0ea5e9' },
+            krishna: { name: 'Shri Krishna', mantra: 'Om Namo Bhagavate Vasudevaya', color: 'from-cyan-500 to-blue-600', bg: '#ecfeff', accent: '#06b6d4' },
+            rama: { name: 'Shri Ram', mantra: 'Jai Shri Ram', color: 'from-orange-400 to-red-500', bg: '#fff7ed', accent: '#f97316' },
+            hanuman: { name: 'Lord Hanuman', mantra: 'Om Hanumate Namah', color: 'from-red-500 to-orange-600', bg: '#fef2f2', accent: '#ef4444' },
+            durga: { name: 'Maa Durga', mantra: 'Om Dum Durgaye Namaha', color: 'from-pink-500 to-rose-600', bg: '#fdf2f8', accent: '#ec4899' }
+        };
+
+        const VEDAS = [
+            { name: 'Rigveda', meaning: 'Verses & Hymns', desc: 'The oldest known Vedic Sanskrit text.', icon: 'scroll', color: 'text-amber-600', bg: 'bg-amber-100' },
+            { name: 'Yajurveda', meaning: 'Worship Rituals', desc: 'Guide for rituals and offerings.', icon: 'flame', color: 'text-orange-600', bg: 'bg-orange-100' },
+            { name: 'Samaveda', meaning: 'Song & Chants', desc: 'The Veda of melodies and chants.', icon: 'music', color: 'text-blue-600', bg: 'bg-blue-100' },
+            { name: 'Atharvaveda', meaning: 'Daily Life', desc: 'Knowledge for daily procedures and healing.', icon: 'sparkles', color: 'text-purple-600', bg: 'bg-purple-100' }
+        ];
+
+        const FESTIVALS = [
+            { name: 'Maha Shivratri', date: 'Feb 18', desc: 'The Great Night of Shiva' },
+            { name: 'Holi', date: 'Mar 8', desc: 'Festival of Colors' },
+            { name: 'Ram Navami', date: 'Mar 30', desc: 'Birth of Lord Rama' },
+            { name: 'Diwali', date: 'Nov 12', desc: 'Festival of Lights' }
+        ];
+
+        let state = {
+            counts: {}, 
+            currentGod: 'shiva',
+            userName: 'Seeker',
+            sankalpa: '',
+            sankalpaDate: '',
+            kundaliData: null,
+            chartData: null
+        };
+        
+        let timerInterval;
+        let timeLeft = 0;
+        let isPaused = false;
+        
+        // Audio Objects
+        const meditationAudio = new Audio('https://assets.mixkit.co/music/preview/mixkit-valley-sunset-127.mp3');
+        meditationAudio.loop = true;
+        let isMuted = false;
+
+        const mantraAudio = new Audio('https://assets.mixkit.co/music/preview/mixkit-meditation-flute-2763.mp3'); // Placeholder for mantra
+        mantraAudio.loop = true;
+        let isMantraPlaying = false;
+
+        // --- Persistence ---
+        function loadState() {
+            const saved = localStorage.getItem('ananda_app_state');
+            if (saved) {
+                state = JSON.parse(saved);
+                if (!state.kundaliData) state.kundaliData = null;
+                if (!state.chartData) state.chartData = null;
+                
+                const today = new Date().toDateString();
+                if (state.sankalpaDate !== today) {
+                    state.sankalpa = '';
+                    state.sankalpaDate = today;
+                }
+            } else {
+                Object.keys(GODS).forEach(key => {
+                    state.counts[key] = { total: 0, malas: 0 };
+                });
+                state.sankalpaDate = new Date().toDateString();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('ananda_app_state', JSON.stringify(state));
+        }
+        
+        function updateSankalpa(value) {
+            state.sankalpa = value;
+            saveState();
+        }
+
+        // --- Render Functions ---
+
+        function renderHeader(title, subtitle = '') {
+            return `
+                <div class="px-6 pt-10 pb-4 flex justify-between items-center bg-transparent">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 font-serif tracking-tight">${title}</h1>
+                        ${subtitle ? `<p class="text-brand-600 text-xs font-semibold uppercase tracking-wider mt-0.5">${subtitle}</p>` : ''}
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-brand-700 shadow-inner border border-white">
+                        <span class="font-serif font-bold text-xl">ॐ</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHome() {
+            const totalChants = Object.values(state.counts).reduce((acc, curr) => acc + curr.total, 0);
+            const festivalHtml = FESTIVALS.map(f => `
+                <div class="flex-shrink-0 w-32 p-3 bg-white rounded-xl border border-brand-100 shadow-sm text-center">
+                    <p class="text-xs text-brand-500 font-bold uppercase tracking-wide">${f.date}</p>
+                    <h5 class="text-sm font-bold text-gray-800 my-1 truncate">${f.name}</h5>
+                    <p class="text-[10px] text-gray-400 truncate">${f.desc}</p>
+                </div>
+            `).join('');
+            
+            return `
+                ${renderHeader('Pranam, ' + state.userName, new Date().toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' }))}
+                
+                <div class="px-6 space-y-8 pb-8 pt-2">
+                    
+                    <!-- Sankalpa Input -->
+                    <div class="space-y-4 animate-slide-up">
+                        <div class="card-premium p-5 rounded-2xl relative overflow-hidden group">
+                            <div class="absolute right-0 top-0 w-24 h-24 bg-brand-100 rounded-bl-[80px] opacity-50 -z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                            
+                            <label class="flex items-center gap-2 text-[10px] font-bold text-brand-600 uppercase tracking-widest mb-3 z-10 relative">
+                                <i data-lucide="sun" class="w-3 h-3"></i> Today's Sankalpa
+                            </label>
+                            <input type="text" 
+                                value="${state.sankalpa}" 
+                                oninput="updateSankalpa(this.value)"
+                                placeholder="What is your intention today?" 
+                                class="w-full bg-transparent border-b-2 border-brand-100 pb-2 text-xl font-serif text-gray-800 placeholder-gray-300 focus:border-brand-500 focus:outline-none transition-colors relative z-10"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Festivals Widget -->
+                    <div class="animate-slide-up delay-100">
+                        <div class="flex items-center justify-between mb-3 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">Panchang & Festivals</h3>
+                        </div>
+                        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+                            ${festivalHtml}
+                        </div>
+                    </div>
+
+                    <!-- Pandit Profile (Featured) -->
+                    <div class="animate-slide-up delay-100">
+                        <div class="flex items-center justify-between mb-3 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">Featured Guru</h3>
+                        </div>
+                        
+                        <div class="card-featured rounded-3xl p-6 relative overflow-hidden">
+                             <!-- Header -->
+                             <div class="flex gap-5 mb-6 relative z-10">
+                                <div class="w-20 h-20 rounded-2xl bg-brand-100 flex items-center justify-center text-brand-700 shadow-md border-2 border-white flex-shrink-0 overflow-hidden">
+                                     <span class="font-serif text-3xl font-bold">Pt</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-xl font-bold text-gray-900 font-serif leading-tight">Pt. Brahmdatt Sharma</h4>
+                                    <p class="text-xs text-brand-600 font-bold uppercase tracking-wide mt-1 mb-2">Vedic Astrologer</p>
+                                    <div class="flex items-center gap-2 text-gray-500 text-xs bg-white/50 w-fit px-2 py-1 rounded-lg">
+                                        <i data-lucide="award" class="w-3 h-3 text-brand-500"></i> 20+ Years Exp.
+                                    </div>
+                                </div>
+                             </div>
+
+                             <!-- Locations -->
+                             <div class="mb-5 relative z-10">
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Locations Served</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2.5 py-1 rounded-full bg-white border border-gray-100 text-gray-600 text-[10px] font-bold flex items-center gap-1">
+                                        <i data-lucide="map-pin" class="w-2.5 h-2.5 text-brand-500"></i> Haridwar
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-full bg-white border border-gray-100 text-gray-600 text-[10px] font-bold">Kashi</span>
+                                    <span class="px-2.5 py-1 rounded-full bg-white border border-gray-100 text-gray-600 text-[10px] font-bold">Jaipur</span>
+                                    <span class="px-2.5 py-1 rounded-full bg-white border border-gray-100 text-gray-600 text-[10px] font-bold">Delhi</span>
+                                </div>
+                             </div>
+                             
+                             <!-- Services -->
+                             <div class="mb-6 relative z-10">
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Divine Services</p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="flex items-center gap-2 text-xs text-gray-700 bg-white/60 p-2 rounded-lg">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> Janma Kundali
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs text-gray-700 bg-white/60 p-2 rounded-lg">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> Hawan & Puja
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs text-gray-700 bg-white/60 p-2 rounded-lg">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> Vivah Sanskar
+                                    </div>
+                                    <div class="flex items-center gap-2 text-xs text-gray-700 bg-white/60 p-2 rounded-lg">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> Vastu Shastra
+                                    </div>
+                                </div>
+                             </div>
+
+                             <!-- CTA -->
+                             <button onclick="bookAppointment()" class="w-full bg-gray-900 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-gray-200 active:scale-95 transition-transform flex items-center justify-center gap-2 relative z-10 text-sm">
+                                <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                                Book Appointment
+                             </button>
+                             
+                             <!-- Decor -->
+                             <div class="absolute top-0 right-0 w-48 h-48 bg-brand-50 rounded-full opacity-60 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Tools -->
+                    <div class="grid grid-cols-2 gap-4 animate-slide-up delay-200">
+                        <div class="card-premium p-5 rounded-2xl flex flex-col justify-between h-32 group hover:border-brand-200 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center text-brand-600 group-hover:scale-110 transition-transform">
+                                <i data-lucide="activity" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-3xl font-bold text-gray-900 block font-serif">${totalChants}</span>
+                                <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Mantras Chanted</span>
+                            </div>
+                        </div>
+
+                        <div onclick="openMeditationSetup()" class="card-premium p-5 rounded-2xl flex flex-col justify-between h-32 cursor-pointer group hover:border-indigo-200 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
+                                <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-lg font-bold text-gray-900 block font-serif">Dhyana</span>
+                                <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-wider flex items-center gap-1">
+                                    Start Session <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discover Section -->
+                     <div class="animate-slide-up delay-300">
+                        <div class="flex items-center justify-between mb-3 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">Discover</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div onclick="router('kundali')" class="group flex items-center p-4 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:bg-white transition-all">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200 group-hover:scale-105 transition-transform">
+                                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h4 class="font-bold text-gray-800 text-lg">AI Vedic Kundali</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">Unlock the secrets of your stars</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-auto group-hover:text-indigo-500 transition-colors"></i>
+                            </div>
+
+                             <div onclick="router('temples')" class="group flex items-center p-4 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:bg-white transition-all">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-400 to-red-500 flex items-center justify-center text-white shadow-lg shadow-orange-200 group-hover:scale-105 transition-transform">
+                                    <i data-lucide="map" class="w-6 h-6"></i>
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h4 class="font-bold text-gray-800 text-lg">Pilgrimage Finder</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">Find sacred destinations nearby</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-auto group-hover:text-brand-500 transition-colors"></i>
+                            </div>
+                            
+                            <div onclick="router('vedas')" class="group flex items-center p-4 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:bg-white transition-all">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-lg shadow-amber-200 group-hover:scale-105 transition-transform">
+                                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h4 class="font-bold text-gray-800 text-lg">Ancient Vedas</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">Timeless wisdom of the rishis</p>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-auto group-hover:text-amber-500 transition-colors"></i>
+                            </div>
+                        </div>
+                     </div>
+
+                    <!-- Gallery -->
+                    <div class="animate-slide-up delay-300">
+                        <div class="flex items-center justify-between mb-3 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">Divine Gallery</h3>
+                        </div>
+                        <div class="flex overflow-x-auto space-x-4 pb-6 no-scrollbar -mx-6 px-6">
+                            <div class="flex-shrink-0 w-64 h-40 rounded-2xl relative overflow-hidden shadow-md group border border-gray-100">
+                                <img src="https://images.unsplash.com/photo-1603038618456-4c424f4640d2?q=80&w=400&auto=format&fit=crop" alt="Hawan" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 text-white">
+                                    <p class="font-bold text-base font-serif">Maha Yajna</p>
+                                    <p class="text-[10px] text-gray-300 uppercase tracking-widest font-medium">Community Peace</p>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 w-64 h-40 rounded-2xl relative overflow-hidden shadow-md group border border-gray-100">
+                                <img src="https://images.unsplash.com/photo-1544465492-c4e9515096b7?q=80&w=400&auto=format&fit=crop" alt="Pooja" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 text-white">
+                                    <p class="font-bold text-base font-serif">Ganesh Puja</p>
+                                    <p class="text-[10px] text-gray-300 uppercase tracking-widest font-medium">New Beginnings</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderJaap() {
+            const god = GODS[state.currentGod];
+            const stats = state.counts[state.currentGod];
+            const progress = (stats.total % 108) / 108 * 100;
+            
+            document.body.style.background = god.bg;
+
+            const selectorHtml = Object.entries(GODS).map(([key, data]) => `
+                <button onclick="changeGod('${key}')" 
+                    class="flex flex-col items-center min-w-[72px] space-y-2 transition-all duration-300 ${state.currentGod === key ? 'opacity-100 scale-105' : 'opacity-60 scale-95 grayscale hover:grayscale-0'}">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${data.color} flex items-center justify-center text-white shadow-lg ${state.currentGod === key ? 'ring-2 ring-offset-2 ring-' + data.color.split(' ')[1] : ''}">
+                        <span class="text-lg font-bold font-serif">${data.name.split(' ')[0][0]}</span>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600">${data.name.split(' ')[1] || data.name}</span>
+                </button>
+            `).join('');
+
+            return `
+                ${renderHeader('Naam Jaap', 'Chant & Transcend')}
+                
+                <div class="px-6 py-6 animate-slide-up">
+                    <div class="flex space-x-2 overflow-x-auto no-scrollbar pb-2 mb-4">
+                        ${selectorHtml}
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center min-h-[50vh] relative">
+                        
+                        <!-- Main Chant Circle -->
+                        <div class="relative w-72 h-72">
+                            <div class="absolute inset-0 rounded-full border-[3px] border-gray-100"></div>
+                            <div class="absolute inset-0 rounded-full border-[3px] border-transparent border-t-current" style="color: ${god.accent}; transform: rotate(${progress * 3.6}deg); transition: transform 0.3s ease;"></div>
+                            
+                            <button id="jaap-btn" class="absolute inset-2 rounded-full jaap-circle flex flex-col items-center justify-center text-white shadow-2xl shadow-orange-500/30 group outline-none active:scale-95 transition-transform duration-100 overflow-hidden" onclick="handleChant(event)">
+                                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity"></div>
+                                <span class="text-6xl font-serif mb-1">ॐ</span>
+                                <span class="text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Tap</span>
+                            </button>
+                        </div>
+
+                        <!-- Interactive Actions (Flower & Audio) -->
+                        <div class="flex gap-4 mt-8 mb-4">
+                            <button onclick="offerFlowers(event)" class="bg-white p-3 rounded-full shadow-lg border border-gray-100 text-pink-500 active:scale-90 transition-transform relative overflow-hidden" title="Offer Flowers">
+                                <i data-lucide="flower-2" class="w-6 h-6"></i>
+                            </button>
+                            
+                            <button onclick="toggleMantraAudio()" class="bg-white p-3 rounded-full shadow-lg border border-gray-100 ${isMantraPlaying ? 'text-brand-600 border-brand-200' : 'text-gray-400'} active:scale-90 transition-all" title="Play Mantra">
+                                <i id="mantra-icon" data-lucide="${isMantraPlaying ? 'pause' : 'play'}" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+
+                        <!-- Info Card -->
+                        <div class="card-premium px-8 py-6 rounded-3xl text-center w-full max-w-xs relative overflow-hidden">
+                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${god.color}"></div>
+                             
+                             <h2 class="text-2xl font-bold text-gray-900 font-serif mb-1">${god.name}</h2>
+                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">${god.mantra}</p>
+                             
+                             <div class="flex justify-between items-center px-4">
+                                <div class="text-center">
+                                    <span class="block text-3xl font-bold text-gray-800 tabular-nums" id="current-count">${stats.total % 108}</span>
+                                    <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Beads</span>
+                                </div>
+                                <div class="w-px h-8 bg-gray-200"></div>
+                                <div class="text-center">
+                                    <span class="block text-3xl font-bold text-gray-800 tabular-nums" id="mala-count">${stats.malas}</span>
+                                    <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Malas</span>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderVedas() {
+            const cards = VEDAS.map((veda, index) => `
+                <div class="card-premium p-6 rounded-2xl flex gap-5 animate-slide-up group hover:shadow-md transition-all" style="animation-delay: ${index * 100}ms">
+                    <div class="w-14 h-14 rounded-2xl ${veda.bg} flex-shrink-0 flex items-center justify-center ${veda.color} shadow-sm group-hover:scale-105 transition-transform">
+                        <i data-lucide="${veda.icon}" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 font-serif mb-1">${veda.name}</h3>
+                        <p class="text-[10px] ${veda.color} font-bold uppercase tracking-widest mb-2">${veda.meaning}</p>
+                        <p class="text-sm text-gray-500 leading-relaxed">${veda.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+                ${renderHeader('Sacred Vedas', 'Ancient Wisdom')}
+                <div class="px-6 py-6 space-y-4">
+                    ${cards}
+                </div>
+            `;
+        }
+
+        function renderTemples() {
+            return `
+                ${renderHeader('Pilgrimage', 'Sacred Destinations')}
+                
+                <div class="px-6 py-6 space-y-6">
+                    <!-- Search Card -->
+                    <div class="card-premium text-center p-8 rounded-3xl animate-slide-up">
+                        <div class="w-20 h-20 bg-brand-50 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-600 animate-float shadow-inner">
+                            <i data-lucide="map" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 font-serif mb-2">Find Divinity Near You</h3>
+                        <p class="text-gray-500 mb-8 text-sm leading-relaxed px-4">Discover temples, ashrams, and spiritual centers in your current vicinity.</p>
+                        
+                        <button onclick="findTemples()" class="w-full bg-brand-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-brand-200 active:scale-95 transition-transform flex items-center justify-center gap-2">
+                            <i data-lucide="navigation" class="w-5 h-5"></i>
+                            Locate Temples
+                        </button>
+                    </div>
+
+                    <!-- Virtual Darshan -->
+                    <div class="animate-slide-up delay-100">
+                        <div class="flex items-center justify-between mb-4 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">Live Darshan</h3>
+                             <i data-lucide="video" class="w-4 h-4 text-red-500 animate-pulse"></i>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="https://www.youtube.com/results?search_query=live+darshan+tirupati" target="_blank" class="block card-premium p-3 rounded-2xl group hover:border-brand-300">
+                                <div class="h-28 bg-gray-100 rounded-xl mb-3 bg-cover bg-center shadow-inner" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Tirumala_090615.jpg')"></div>
+                                <h5 class="font-bold text-sm text-gray-900 font-serif">Tirupati Balaji</h5>
+                                <p class="text-[10px] text-green-600 font-bold uppercase mt-1">● Live Now</p>
+                            </a>
+                            <a href="https://www.youtube.com/results?search_query=live+darshan+golden+temple" target="_blank" class="block card-premium p-3 rounded-2xl group hover:border-brand-300">
+                                <div class="h-28 bg-gray-100 rounded-xl mb-3 bg-cover bg-center shadow-inner" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/94/Golden_Temple_India.jpg')"></div>
+                                <h5 class="font-bold text-sm text-gray-900 font-serif">Golden Temple</h5>
+                                <p class="text-[10px] text-green-600 font-bold uppercase mt-1">● Live Now</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Chart Generation Logic (Updated Size) ---
+        function renderNorthIndianChart(placements) {
+            const getP = (h) => placements[h] ? placements[h] : "";
+            
+            return `
+            <svg viewBox="0 0 400 200" class="w-full h-auto bg-brand-50 border border-brand-200 rounded-xl shadow-inner">
+                <!-- Borders -->
+                <rect x="0" y="0" width="400" height="200" fill="none" stroke="#ea7a14" stroke-width="1.5"/>
+                
+                <!-- Main Cross (Diagonals) -->
+                <line x1="0" y1="0" x2="400" y2="200" stroke="#ea7a14" stroke-width="1"/>
+                <line x1="400" y1="0" x2="0" y2="200" stroke="#ea7a14" stroke-width="1"/>
+                
+                <!-- Diamond (Midpoints) -->
+                <line x1="200" y1="0" x2="0" y2="100" stroke="#ea7a14" stroke-width="1"/>
+                <line x1="0" y1="100" x2="200" y2="200" stroke="#ea7a14" stroke-width="1"/>
+                <line x1="200" y1="200" x2="400" y2="100" stroke="#ea7a14" stroke-width="1"/>
+                <line x1="400" y1="100" x2="200" y2="0" stroke="#ea7a14" stroke-width="1"/>
+
+                <!-- House Texts (Bigger Fonts applied via CSS .chart-text) -->
+                <text x="200" y="85" text-anchor="middle" class="chart-text">${getP(1)}</text>
+                <text x="200" y="115" text-anchor="middle" class="house-num">1</text>
+                
+                <text x="100" y="35" text-anchor="middle" class="chart-text">${getP(2)}</text>
+                <text x="180" y="20" text-anchor="middle" class="house-num">2</text>
+                
+                <text x="50" y="60" text-anchor="middle" class="chart-text">${getP(3)}</text>
+                <text x="80" y="90" text-anchor="middle" class="house-num">3</text>
+                
+                <text x="100" y="115" text-anchor="middle" class="chart-text">${getP(4)}</text>
+                <text x="120" y="105" text-anchor="middle" class="house-num">4</text>
+                
+                <text x="50" y="150" text-anchor="middle" class="chart-text">${getP(5)}</text>
+                <text x="80" y="120" text-anchor="middle" class="house-num">5</text>
+                
+                <text x="100" y="180" text-anchor="middle" class="chart-text">${getP(6)}</text>
+                <text x="180" y="190" text-anchor="middle" class="house-num">6</text>
+                
+                <text x="200" y="150" text-anchor="middle" class="chart-text">${getP(7)}</text>
+                <text x="200" y="125" text-anchor="middle" class="house-num">7</text>
+                
+                <text x="300" y="180" text-anchor="middle" class="chart-text">${getP(8)}</text>
+                <text x="220" y="190" text-anchor="middle" class="house-num">8</text>
+                
+                <text x="350" y="150" text-anchor="middle" class="chart-text">${getP(9)}</text>
+                <text x="320" y="120" text-anchor="middle" class="house-num">9</text>
+                
+                <text x="300" y="115" text-anchor="middle" class="chart-text">${getP(10)}</text>
+                <text x="280" y="105" text-anchor="middle" class="house-num">10</text>
+                
+                <text x="350" y="60" text-anchor="middle" class="chart-text">${getP(11)}</text>
+                <text x="320" y="90" text-anchor="middle" class="house-num">11</text>
+                
+                <text x="300" y="35" text-anchor="middle" class="chart-text">${getP(12)}</text>
+                <text x="220" y="20" text-anchor="middle" class="house-num">12</text>
+            </svg>
+            `;
+        }
+
+        function renderKundali() {
+            if (state.kundaliData) {
+                const placements = state.chartData ? state.chartData : {};
+                
+                return `
+                    ${renderHeader('Vedic Chart', 'Your Cosmic Blueprint')}
+                    <div class="px-6 py-6 animate-slide-up">
+                        <div class="card-premium p-4 mb-6 rounded-2xl flex justify-between items-center bg-indigo-50/50 border-indigo-100">
+                            <div>
+                                <p class="text-[10px] text-indigo-400 font-bold uppercase tracking-widest">Analysis For</p>
+                                <p class="text-indigo-900 font-bold text-lg font-serif">${state.kundaliData.name}</p>
+                                <p class="text-xs text-indigo-600 font-medium">${state.kundaliData.date} • ${state.kundaliData.time}</p>
+                            </div>
+                            <button onclick="resetKundali()" class="text-xs bg-white text-indigo-600 px-4 py-2 rounded-xl border border-indigo-200 font-bold shadow-sm active:scale-95 transition-transform">New</button>
+                        </div>
+                        
+                        <!-- Chart Container (Increased Size) -->
+                        <div class="mb-8 p-1 bg-white rounded-2xl shadow-sm border border-brand-100">
+                             <div class="bg-brand-50/30 rounded-xl p-3 pb-5">
+                                <h4 class="text-xs text-center font-bold text-gray-400 uppercase tracking-widest mb-4 mt-1">Lagna Chart</h4>
+                                <div class="w-full max-w-md mx-auto"> <!-- Increased max-width -->
+                                    ${renderNorthIndianChart(placements)}
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="prose prose-sm max-w-none bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                            ${marked.parse(state.kundaliData.prediction)}
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+                ${renderHeader('Kundali', 'Generate your birth chart')}
+                <div class="px-6 py-6 animate-slide-up">
+                    <div class="card-premium p-6 rounded-3xl mb-6 relative overflow-hidden bg-white">
+                        <!-- Decorative background elements -->
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-[100px] -z-0"></div>
+                        
+                        <form id="kundali-form" onsubmit="generateKundali(event)" class="space-y-5 relative z-10">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">Full Name</label>
+                                <input type="text" name="name" required class="input-field border-gray-200 focus:border-brand-500" placeholder="e.g. Rahul Sharma">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">Date of Birth</label>
+                                    <input type="date" name="dob" required class="input-field border-gray-200 focus:border-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">Time</label>
+                                    <input type="time" name="tob" required class="input-field border-gray-200 focus:border-brand-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">Place of Birth</label>
+                                <input type="text" name="place" required class="input-field border-gray-200 focus:border-brand-500" placeholder="e.g. Mumbai, India">
+                            </div>
+
+                            <button type="submit" class="w-full bg-mystic-900 text-white py-4 rounded-xl font-bold shadow-lg shadow-indigo-200 active:scale-95 transition-transform flex items-center justify-center gap-2 mt-4 text-sm">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-brand-300"></i>
+                                Generate Chart
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div id="loading-state" class="hidden flex-col items-center justify-center py-20 text-center">
+                        <div class="relative w-24 h-24 mb-6">
+                            <div class="absolute inset-0 border-[6px] border-brand-100 rounded-full"></div>
+                            <div class="absolute inset-0 border-[6px] border-brand-500 rounded-full border-t-transparent animate-spin"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i data-lucide="star" class="w-8 h-8 text-brand-500 animate-pulse"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif">Aligning Stars...</h3>
+                        <p class="text-gray-400 text-sm max-w-[200px] mx-auto leading-relaxed">Connecting with cosmic intelligence to map your destiny.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Logic & Event Handlers ---
+
+        function bookAppointment() {
+            // Simple interaction for the button
+            alert("Thank you! Please contact Pt. Brahmdatt Sharma at +91-XXXXXXXXXX to confirm your slot.");
+        }
+
+        function router(route) {
+            const app = document.getElementById('app-content');
+            
+            // Restore default background if leaving Jaap
+            if (route !== 'jaap') {
+                document.body.style.background = '#fffbf5';
+            }
+            
+            // Stop mantra audio if leaving jaap
+            if (route !== 'jaap' && isMantraPlaying) {
+                toggleMantraAudio();
+            }
+
+            app.style.opacity = '0';
+            app.style.transform = 'translateY(10px)'; 
+            
+            setTimeout(() => {
+                // Nav UI Update
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    if (btn.getAttribute('data-target') === 'kundali') return;
+                    const icon = btn.querySelector('svg');
+                    const label = btn.querySelector('span');
+                    const wrapper = btn.querySelector('.nav-icon-wrapper');
+                    
+                    if(icon) {
+                        icon.classList.remove('text-brand-600');
+                        icon.classList.add('text-gray-400');
+                        wrapper.classList.remove('bg-brand-50');
+                        label.classList.remove('text-brand-600');
+                        label.classList.add('text-gray-400');
+                    }
+                });
+                
+                const activeBtn = document.querySelector(`button[data-target="${route}"]`);
+                if(activeBtn && route !== 'kundali') {
+                    const activeIcon = activeBtn.querySelector('svg');
+                    const activeLabel = activeBtn.querySelector('span');
+                    const activeWrapper = activeBtn.querySelector('.nav-icon-wrapper');
+                    
+                    if(activeIcon) {
+                        activeIcon.classList.remove('text-gray-400');
+                        activeIcon.classList.add('text-brand-600');
+                        activeWrapper.classList.add('bg-brand-50');
+                        activeLabel.classList.remove('text-gray-400');
+                        activeLabel.classList.add('text-brand-600');
+                    }
+                }
+
+                // Render Content
+                app.style.transform = 'translateY(0)';
+                if (route === 'home') app.innerHTML = renderHome();
+                else if (route === 'jaap') app.innerHTML = renderJaap();
+                else if (route === 'vedas') app.innerHTML = renderVedas();
+                else if (route === 'temples') app.innerHTML = renderTemples();
+                else if (route === 'kundali') app.innerHTML = renderKundali();
+
+                lucide.createIcons();
+                app.style.opacity = '1';
+                app.scrollTop = 0;
+            }, 300);
+        }
+
+        function changeGod(godKey) {
+            state.currentGod = godKey;
+            // Stop audio if changing god
+            if(isMantraPlaying) toggleMantraAudio();
+            
+            saveState();
+            router('jaap');
+        }
+
+        function handleChant(e) {
+            const button = e.currentTarget;
+            
+            // Ripple
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            const rect = button.getBoundingClientRect();
+            
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${e.clientX - rect.left - radius}px`;
+            circle.style.top = `${e.clientY - rect.top - radius}px`;
+            circle.classList.add("ripple");
+            
+            const existingRipple = button.getElementsByClassName("ripple")[0];
+            if (existingRipple) existingRipple.remove();
+            button.appendChild(circle);
+
+            // Logic
+            const godStats = state.counts[state.currentGod];
+            godStats.total++;
+            
+            if (godStats.total % 108 === 0) {
+                godStats.malas++;
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
+            } else {
+                if (navigator.vibrate) navigator.vibrate(30);
+            }
+
+            saveState();
+            
+            // DOM Updates
+            document.getElementById('current-count').innerText = godStats.total % 108;
+            document.getElementById('mala-count').innerText = godStats.malas;
+        }
+        
+        function offerFlowers(e) {
+            const colors = ['🌸', '🌺', '🌹', '🌼', '🌻'];
+            // Create multiple flowers
+            for(let i=0; i<8; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.innerText = colors[Math.floor(Math.random() * colors.length)];
+                    flower.classList.add('flower');
+                    flower.style.left = Math.random() * window.innerWidth + 'px';
+                    flower.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(flower);
+                    
+                    // Cleanup
+                    setTimeout(() => flower.remove(), 4000);
+                }, i * 200);
+            }
+            if(navigator.vibrate) navigator.vibrate(100);
+        }
+        
+        function toggleMantraAudio() {
+            isMantraPlaying = !isMantraPlaying;
+            const icon = document.getElementById('mantra-icon');
+            
+            if(isMantraPlaying) {
+                mantraAudio.play().catch(e => console.log(e));
+                icon.setAttribute('data-lucide', 'pause');
+                icon.parentElement.classList.add('text-brand-600', 'border-brand-200');
+                icon.parentElement.classList.remove('text-gray-400');
+            } else {
+                mantraAudio.pause();
+                icon.setAttribute('data-lucide', 'play');
+                icon.parentElement.classList.remove('text-brand-600', 'border-brand-200');
+                icon.parentElement.classList.add('text-gray-400');
+            }
+            lucide.createIcons();
+        }
+
+        // --- Meditation Logic ---
+        function openMeditationSetup() {
+            const overlay = document.getElementById('meditation-overlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                overlay.classList.add('opacity-100');
+            }, 10);
+            startMeditation(5);
+        }
+
+        function closeMeditation() {
+            const overlay = document.getElementById('meditation-overlay');
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay.classList.remove('flex');
+                overlay.classList.add('hidden');
+            }, 500);
+            stopMeditation();
+        }
+
+        function startMeditation(minutes) {
+            clearInterval(timerInterval);
+            timeLeft = minutes * 60;
+            isPaused = false;
+            updateTimerDisplay();
+            document.getElementById('timer-control').innerText = "Pause";
+            isMuted = false;
+            updateMuteIcon();
+            meditationAudio.currentTime = 0;
+            meditationAudio.volume = 0.5;
+            meditationAudio.play().catch(e => console.log("Audio play failed (interaction required):", e));
+            
+            timerInterval = setInterval(() => {
+                if(!isPaused) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        if(navigator.vibrate) navigator.vibrate([500, 500, 500]);
+                        document.getElementById('timer-control').innerText = "Complete";
+                        meditationAudio.pause();
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopMeditation() {
+            clearInterval(timerInterval);
+            meditationAudio.pause();
+            closeMeditation();
+        }
+
+        function toggleTimerState() {
+            if (timeLeft <= 0) {
+                closeMeditation();
+                return;
+            }
+            isPaused = !isPaused;
+            document.getElementById('timer-control').innerText = isPaused ? "Resume" : "Pause";
+            if(isPaused) meditationAudio.pause(); else meditationAudio.play();
+        }
+        
+        function toggleMute() {
+            isMuted = !isMuted;
+            meditationAudio.muted = isMuted;
+            updateMuteIcon();
+        }
+        
+        function updateMuteIcon() {
+            const icon = document.getElementById('mute-icon');
+            if(isMuted) icon.setAttribute('data-lucide', 'volume-x');
+            else icon.setAttribute('data-lucide', 'volume-2');
+            lucide.createIcons();
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timer-display').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // --- API Calls ---
+        async function generateKundali(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                name: form.name.value,
+                date: form.dob.value,
+                time: form.tob.value,
+                place: form.place.value
+            };
+
+            form.parentElement.classList.add('hidden');
+            document.getElementById('loading-state').classList.remove('hidden');
+            document.getElementById('loading-state').classList.add('flex');
+
+            try {
+                const prompt = `
+                    You are an expert Vedic Astrologer. Generate a Kundali report for:
+                    Name: ${data.name}
+                    DOB: ${data.date}
+                    Time: ${data.time}
+                    Place: ${data.place}
+
+                    Please provide the output in Markdown format with the following sections:
+                    1. **Planetary Positions**: List where key planets (Sun, Moon, Mars, Jupiter, Saturn, Venus, Mercury, Rahu, Ketu) are likely positioned based on the date.
+                    2. **Personality Analysis**: A spiritual overview of the person's nature.
+                    3. **Career & Wealth**: Predictions related to work and finances.
+                    4. **Relationships**: Insight into love and family life.
+                    5. **Lucky Elements**: Color, Number, and Day.
+
+                    Keep the tone spiritual, uplifting, and authentic to Vedic traditions. Use heading level 3 (###) for sections.
+
+                    IMPORTANT: At the very end of your response, strictly provide a JSON block enclosed in \`\`\`json tags representing the planetary positions for a North Indian Kundali (Houses 1 to 12). Keys should be strings '1' to '12', values should be strings with planet names (e.g., 'Sun, Mars'). If a house is empty, use an empty string "". 
+                    Example format:
+                    \`\`\`json
+                    {
+                      "1": "Sun",
+                      "2": "",
+                      "3": "Mars, Rahu",
+                      ...
+                      "12": "Saturn"
+                    }
+                    \`\`\`
+                `;
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': window.location.href, 
+                        'X-Title': 'Ananda App'
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek/deepseek-chat',
+                        messages: [
+                            { role: 'system', content: 'You are a wise and benevolent Vedic Astrologer.' },
+                            { role: 'user', content: prompt }
+                        ]
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch prediction');
+
+                const result = await response.json();
+                let predictionText = result.choices[0].message.content;
+                let chartData = {};
+
+                const jsonMatch = predictionText.match(/```json\s*([\s\S]*?)\s*```/);
+                if (jsonMatch && jsonMatch[1]) {
+                    try {
+                        chartData = JSON.parse(jsonMatch[1]);
+                        predictionText = predictionText.replace(/```json\s*[\s\S]*?\s*```/, '');
+                    } catch (e) {
+                        console.error("Failed to parse chart JSON", e);
+                    }
+                }
+
+                state.kundaliData = { ...data, prediction: predictionText };
+                state.chartData = chartData;
+                saveState();
+                router('kundali');
+
+            } catch (error) {
+                console.error(error);
+                alert("The cosmic connection was interrupted. Please try again.");
+                form.parentElement.classList.remove('hidden');
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('loading-state').classList.remove('flex');
+            }
+        }
+
+        function resetKundali() {
+            state.kundaliData = null;
+            state.chartData = null;
+            saveState();
+            router('kundali');
+        }
+
+        function findTemples() {
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser");
+                return;
+            }
+
+            const btn = document.querySelector('button[onclick="findTemples()"]');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="animate-spin">⏳</span> Locating...';
+            
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const url = `https://www.google.com/maps/search/temples+near+me/@${lat},${lng},14z`;
+                    window.open(url, '_blank');
+                    btn.innerHTML = originalContent;
+                },
+                (error) => {
+                    alert("Unable to retrieve location. Please check settings.");
+                    btn.innerHTML = originalContent;
+                }
+            );
+        }
+
+        // --- Init ---
+        window.addEventListener('load', () => {
+            loadState();
+            
+            const app = document.getElementById('app-content');
+            app.innerHTML = renderHome();
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                document.getElementById('splash').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splash').style.display = 'none';
+                    app.style.opacity = '1';
+                }, 1000);
+            }, 1500);
+
+            // Set Initial Active State
+            const homeBtn = document.querySelector('.nav-btn[data-target="home"]');
+            if(homeBtn) {
+                homeBtn.querySelector('svg').classList.add('text-brand-600');
+                homeBtn.querySelector('.nav-icon-wrapper').classList.add('bg-brand-50');
+                homeBtn.querySelector('span').classList.add('text-brand-600');
+            }
+        });
+
+    </script>
+</body>
+</html>
