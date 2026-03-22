@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ananda - Your Spiritual Companion</title>
-    
+    <link rel="icon" type="image/png" href="sos.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -98,7 +98,6 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
-        /* Gold Gradient Text */
         .text-gold-gradient {
             background: linear-gradient(to right, #b45309, #d97706, #b45309);
             -webkit-background-clip: text;
@@ -110,33 +109,39 @@
         .card-premium {
             background: white;
             border: 1px solid rgba(247, 150, 51, 0.1);
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
         }
-        .card-premium:active { transform: scale(0.97); }
+        .card-premium:hover {
+            box-shadow: 0 20px 40px -10px rgba(247, 150, 51, 0.15);
+            transform: translateY(-4px);
+        }
+        .card-premium:active { transform: scale(0.98); }
 
         .card-founder {
-            background: linear-gradient(135deg, #fff 0%, #fff8f0 100%);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 40px -10px rgba(212, 175, 55, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #fff8f0 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 15px 35px -10px rgba(212, 175, 55, 0.15);
             position: relative;
             overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+        .card-founder:hover {
+            transform: translateY(-4px);
         }
         .card-founder::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
+            top: 0; left: 0; right: 0; height: 5px;
             background: linear-gradient(90deg, #d4af37, #f79633, #d4af37);
         }
 
-        /* Chart SVG Text */
         .chart-text { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; fill: #4338ca; }
         .house-num { font-size: 10px; fill: #9ca3af; font-weight: 500; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Markdown Styles */
         .prose h3 { font-family: 'Tiro Devanagari Hindi', serif; color: #c25e0e; font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.75rem; border-bottom: 1px solid #fed7aa; padding-bottom: 0.25rem; }
         .prose p { margin-bottom: 1rem; color: #4b5563; line-height: 1.7; }
         .prose strong { color: #ea7a14; font-weight: 600; }
@@ -161,9 +166,23 @@
             position: fixed; top: -20px; font-size: 24px; z-index: 50; pointer-events: none;
             animation: floatFlower 3s linear forwards;
         }
+
+        /* Desktop specific tweaks */
+        @media (min-width: 768px) {
+            .app-container {
+                display: flex;
+                height: 100vh;
+                overflow: hidden;
+            }
+            .main-content {
+                flex: 1;
+                overflow-y: auto;
+                padding-bottom: 2rem;
+            }
+        }
     </style>
 </head>
-<body class="text-gray-800 font-sans h-screen flex flex-col overflow-hidden relative selection:bg-brand-200">
+<body class="text-gray-800 font-sans selection:bg-brand-200">
 
     <!-- Splash Screen -->
     <div id="splash" class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-brand-500 transition-opacity duration-1000">
@@ -193,69 +212,126 @@
             </div>
         </div>
 
-        <button onclick="toggleTimerState()" id="timer-control" class="px-10 py-4 bg-white text-mystic-900 rounded-2xl font-bold hover:bg-brand-50 transition-all shadow-xl shadow-indigo-900/50 min-w-[160px] text-lg">
+        <button onclick="toggleTimerState()" id="timer-control" class="px-10 py-4 bg-white text-mystic-900 rounded-full font-bold hover:bg-brand-50 transition-all shadow-xl shadow-indigo-900/50 min-w-[160px] text-lg">
             Pause
         </button>
     </div>
 
-    <!-- Main Content Area -->
-    <main id="app-content" class="flex-1 overflow-y-auto no-scrollbar pb-32 transition-opacity duration-300 opacity-0 relative z-10">
-        <!-- Content injected via JS -->
-    </main>
+    <!-- App Layout (Responsive) -->
+    <div class="app-container w-full h-screen flex flex-col md:flex-row">
+        
+        <!-- Desktop Sidebar (Hidden on Mobile) -->
+        <aside class="hidden md:flex flex-col w-72 bg-white/80 backdrop-blur-2xl border-r border-brand-100 h-full p-6 shadow-[10px_0_40px_rgba(0,0,0,0.02)] z-30">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white shadow-lg">
+                    <span class="font-serif text-2xl">ॐ</span>
+                </div>
+                <div>
+                    <h2 class="font-serif text-2xl font-bold text-gray-900 leading-none">Ananda</h2>
+                    <p class="text-[10px] text-brand-600 font-bold uppercase tracking-widest mt-1">Spiritual Companion</p>
+                </div>
+            </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-brand-100/50 pb-safe pt-2 px-4 shadow-[0_-10px_40px_rgba(0,0,0,0.03)] z-40 rounded-t-3xl">
-        <div class="flex justify-between items-end max-w-lg mx-auto h-20 pb-3 px-1">
-            <button onclick="router('home')" class="nav-btn group flex flex-col items-center gap-1 w-14" data-target="home">
-                <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
-                    <i data-lucide="home" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
-                </div>
-                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_home">Home</span>
-            </button>
-            
-            <button onclick="router('jaap')" class="nav-btn group flex flex-col items-center gap-1 w-14" data-target="jaap">
-                 <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
-                    <i data-lucide="sun" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
-                </div>
-                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_jaap">Jaap</span>
-            </button>
-            
-            <!-- Kundali Center Button -->
-            <button onclick="router('kundali')" class="nav-btn group flex flex-col items-center justify-center -mt-10 w-16" data-target="kundali">
-                <div class="w-16 h-16 rounded-full bg-mystic-800 shadow-xl shadow-indigo-200 border-[4px] border-white flex items-center justify-center transform transition-all active:scale-95 group-hover:-translate-y-1">
-                    <i data-lucide="sparkles" class="w-7 h-7 text-brand-300 animate-pulse-slow"></i>
-                </div>
-                <span class="text-[10px] font-bold text-mystic-800 mt-2" data-translate="nav_kundali">Kundali</span>
-            </button>
-            
-            <button onclick="router('vedas')" class="nav-btn group flex flex-col items-center gap-1 w-14" data-target="vedas">
-                 <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
-                    <i data-lucide="book-open" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
-                </div>
-                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_vedas">Vedas</span>
-            </button>
-            
-            <button onclick="router('temples')" class="nav-btn group flex flex-col items-center gap-1 w-14" data-target="temples">
-                 <div class="p-2 rounded-2xl group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
-                    <i data-lucide="map-pin" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
-                </div>
-                <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_temples">Temples</span>
-            </button>
-        </div>
-    </nav>
+            <nav class="flex flex-col gap-3 flex-1">
+                <button onclick="router('home')" class="nav-btn-desktop flex items-center gap-4 px-5 py-3.5 rounded-full transition-all" data-target="home">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span class="font-semibold" data-translate="nav_home">Home</span>
+                </button>
+                <button onclick="router('jaap')" class="nav-btn-desktop flex items-center gap-4 px-5 py-3.5 rounded-full transition-all" data-target="jaap">
+                    <i data-lucide="sun" class="w-5 h-5"></i>
+                    <span class="font-semibold" data-translate="nav_jaap">Jaap</span>
+                </button>
+                <button onclick="router('kundali')" class="nav-btn-desktop flex items-center gap-4 px-5 py-3.5 rounded-full transition-all" data-target="kundali">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    <span class="font-semibold" data-translate="nav_kundali">Kundali</span>
+                </button>
+                <button onclick="router('pandits')" class="nav-btn-desktop flex items-center gap-4 px-5 py-3.5 rounded-full transition-all" data-target="pandits">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span class="font-semibold" data-translate="nav_pandits">Pandits</span>
+                </button>
+                <button onclick="router('temples')" class="nav-btn-desktop flex items-center gap-4 px-5 py-3.5 rounded-full transition-all" data-target="temples">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    <span class="font-semibold" data-translate="nav_temples">Temples</span>
+                </button>
+            </nav>
+
+            <div class="mt-auto p-5 bg-brand-50 rounded-[2rem] border border-brand-100 text-center shadow-inner">
+                <p class="text-xs text-brand-700 font-semibold mb-3 uppercase tracking-wider">Daily Inspiration</p>
+                <p class="text-sm font-serif text-gray-800 italic leading-relaxed">"The soul is a localized spark of the divine."</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content flex-1 flex flex-col relative w-full h-full overflow-hidden">
+            <div id="app-content" class="flex-1 overflow-y-auto no-scrollbar pb-32 md:pb-10 transition-opacity duration-300 opacity-0 relative z-10 w-full max-w-6xl mx-auto md:px-8">
+                <!-- Content injected via JS -->
+            </div>
+        </main>
+
+        <!-- Mobile Bottom Navigation (Hidden on Desktop) -->
+        <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-brand-100/50 pb-safe pt-2 px-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 rounded-t-[2.5rem]">
+            <div class="flex justify-between items-end max-w-lg mx-auto h-20 pb-3 px-2">
+                <button onclick="router('home')" class="nav-btn-mobile group flex flex-col items-center gap-1.5 w-14" data-target="home">
+                    <div class="p-2 rounded-full group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                        <i data-lucide="home" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_home">Home</span>
+                </button>
+                
+                <button onclick="router('jaap')" class="nav-btn-mobile group flex flex-col items-center gap-1.5 w-14" data-target="jaap">
+                     <div class="p-2 rounded-full group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                        <i data-lucide="sun" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_jaap">Jaap</span>
+                </button>
+                
+                <!-- Kundali Center Button -->
+                <button onclick="router('kundali')" class="nav-btn-mobile group flex flex-col items-center justify-center -mt-10 w-16" data-target="kundali">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-mystic-900 to-indigo-800 shadow-xl shadow-indigo-300/50 border-[4px] border-white flex items-center justify-center transform transition-all active:scale-95 group-hover:-translate-y-1">
+                        <i data-lucide="sparkles" class="w-7 h-7 text-brand-300 animate-pulse-slow"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-mystic-800 mt-2" data-translate="nav_kundali">Kundali</span>
+                </button>
+                
+                <button onclick="router('pandits')" class="nav-btn-mobile group flex flex-col items-center gap-1.5 w-14" data-target="pandits">
+                     <div class="p-2 rounded-full group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                        <i data-lucide="users" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_pandits">Pandits</span>
+                </button>
+                
+                <button onclick="router('temples')" class="nav-btn-mobile group flex flex-col items-center gap-1.5 w-14" data-target="temples">
+                     <div class="p-2 rounded-full group-hover:bg-brand-50 transition-colors nav-icon-wrapper">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-gray-400 group-hover:text-brand-600 transition-colors"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-brand-600 transition-colors" data-translate="nav_temples">Temples</span>
+                </button>
+            </div>
+        </nav>
+    </div>
 
     <!-- JavaScript Logic -->
     <script>
+        // --- Configuration ---
+        const MAX_KUNDALI_QUESTIONS = 1; // Limit for Kundali Q&A
+
         // --- API Config & Obfuscation ---
-        const _k1 = 'sk-or-v1-a499bbd40be965cd9aa118c9f342';
-        const _k2 = 'e3b8f99d6903ea3eb7671c51e479dd842576';
-        const DEEPSEEK_API_KEY = _k1 + _k2;
+        const _p1 = 'sk-or-';
+        const _p2 = 'v1-9ac68';
+        const _p3 = '41858247e';
+        const _p4 = '4920a8bd9';
+        const _p5 = '52b3b9be1';
+        const _p6 = '257959ee5';
+        const _p7 = '42393db36';
+        const _p8 = '55bc9074c';
+        const _p9 = 'fbc5d';
+        const DEEPSEEK_API_KEY = _p1 + _p2 + _p3 + _p4 + _p5 + _p6 + _p7 + _p8 + _p9;
         const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
         // --- Translations Dictionary ---
         const TRANSLATIONS = {
             en: {
-                nav_home: "Home", nav_jaap: "Jaap", nav_kundali: "Kundali", nav_vedas: "Vedas", nav_temples: "Temples",
+                nav_home: "Home", nav_jaap: "Jaap", nav_kundali: "Kundali", nav_pandits: "Pandits", nav_temples: "Temples",
                 greeting: "Namaste",
                 sankalpa_label: "Today's Sankalpa",
                 sankalpa_ph: "What is your intention today?",
@@ -268,6 +344,7 @@
                 svc_vastu: "Vastu Shastra",
                 book_btn: "Book Appointment",
                 festivals_title: "Panchang & Festivals",
+                trending_pandits: "Trending in your area",
                 quick_mantras: "Mantras Chanted",
                 dhyana_title: "Dhyana",
                 dhyana_sub: "Start Session",
@@ -284,13 +361,18 @@
                 tap_chant: "TAP",
                 beads: "Beads",
                 malas: "Malas",
-                vedas_header: "Sacred Vedas",
-                vedas_sub: "Ancient Wisdom",
+                pandit_header: "Book Pandits",
+                pandit_sub: "Verified Vedic Scholars",
+                btn_book_now: "Book Now",
+                filter_all: "All", filter_puja: "Puja", filter_vastu: "Vastu", filter_astro: "Astrology",
                 temple_header: "Pilgrimage",
                 temple_sub: "Sacred Destinations",
                 temple_card_title: "Find Divinity Near You",
                 temple_card_desc: "Discover temples, ashrams, and spiritual centers in your current vicinity.",
                 btn_locate: "Locate Temples",
+                region_local: "Rajasthan (Local)",
+                region_north: "North India",
+                region_south: "South India",
                 live_darshan: "Live Darshan",
                 live_now: "● Live Now",
                 kundali_header: "Vedic Chart",
@@ -310,10 +392,12 @@
                 meditate_inhale: "Inhale • Exhale",
                 pause: "Pause",
                 resume: "Resume",
-                complete: "Complete"
+                complete: "Complete",
+                qa_placeholder: "Ask a question about your chart...",
+                qa_limit_reached: "Question limit reached"
             },
             hi: {
-                nav_home: "होम", nav_jaap: "जाप", nav_kundali: "कुंडली", nav_vedas: "वेद", nav_temples: "मंदिर",
+                nav_home: "होम", nav_jaap: "जाप", nav_kundali: "कुंडली", nav_pandits: "पंडित", nav_temples: "मंदिर",
                 greeting: "नमस्ते",
                 sankalpa_label: "आज का संकल्प",
                 sankalpa_ph: "आज आपका क्या संकल्प है?",
@@ -326,6 +410,7 @@
                 svc_vastu: "वास्तु शास्त्र",
                 book_btn: "परामर्श बुक करें",
                 festivals_title: "पंचांग और त्यौहार",
+                trending_pandits: "आपके क्षेत्र में लोकप्रिय",
                 quick_mantras: "मंत्र जाप",
                 dhyana_title: "ध्यान",
                 dhyana_sub: "सत्र शुरू करें",
@@ -342,13 +427,18 @@
                 tap_chant: "जाप करें",
                 beads: "मनके",
                 malas: "माला",
-                vedas_header: "पवित्र वेद",
-                vedas_sub: "प्राचीन ज्ञान",
+                pandit_header: "पंडित बुक करें",
+                pandit_sub: "सत्यापित वैदिक विद्वान",
+                btn_book_now: "बुक करें",
+                filter_all: "सभी", filter_puja: "पूजा", filter_vastu: "वास्तु", filter_astro: "ज्योतिष",
                 temple_header: "तीर्थ यात्रा",
                 temple_sub: "पवित्र स्थल",
                 temple_card_title: "नजदीकी मंदिर खोजें",
                 temple_card_desc: "अपने वर्तमान स्थान के पास मंदिर, आश्रम और आध्यात्मिक केंद्र खोजें।",
                 btn_locate: "मंदिर खोजें",
+                region_local: "राजस्थान (स्थानीय)",
+                region_north: "उत्तर भारत",
+                region_south: "दक्षिण भारत",
                 live_darshan: "लाइव दर्शन",
                 live_now: "● अभी लाइव",
                 kundali_header: "वैदिक चार्ट",
@@ -368,11 +458,14 @@
                 meditate_inhale: "साँस लें • साँस छोड़ें",
                 pause: "रोकें",
                 resume: "फिर शुरू करें",
-                complete: "पूर्ण"
+                complete: "पूर्ण",
+                qa_placeholder: "अपनी कुंडली के बारे में एक प्रश्न पूछें...",
+                qa_limit_reached: "प्रश्न सीमा समाप्त"
             }
         };
 
         // --- Data ---
+        // Updated images to portrait crops for better full-card layouts
         const GODS = {
             shiva: { name_en: 'Lord Shiva', name_hi: 'भगवान शिव', mantra: 'Om Namah Shivaya', color: 'from-blue-500 to-indigo-600', bg: '#f0f9ff', accent: '#0ea5e9' },
             krishna: { name_en: 'Shri Krishna', name_hi: 'श्री कृष्ण', mantra: 'Om Namo Bhagavate Vasudevaya', color: 'from-cyan-500 to-blue-600', bg: '#ecfeff', accent: '#06b6d4' },
@@ -381,19 +474,41 @@
             durga: { name_en: 'Maa Durga', name_hi: 'माँ दुर्गा', mantra: 'Om Dum Durgaye Namaha', color: 'from-pink-500 to-rose-600', bg: '#fdf2f8', accent: '#ec4899' }
         };
 
-        const VEDAS = [
-            { name_en: 'Rigveda', name_hi: 'ऋग्वेद', meaning_en: 'Verses & Hymns', meaning_hi: 'श्लोक और भजन', desc_en: 'The oldest known Vedic Sanskrit text.', desc_hi: 'सबसे प्राचीन ज्ञात वैदिक संस्कृत ग्रंथ।', icon: 'scroll', color: 'text-amber-600', bg: 'bg-amber-100' },
-            { name_en: 'Yajurveda', name_hi: 'यजुर्वेद', meaning_en: 'Worship Rituals', meaning_hi: 'पूजा अनुष्ठान', desc_en: 'Guide for rituals and offerings.', desc_hi: 'अनुष्ठानों और आहुतियों के लिए मार्गदर्शक।', icon: 'flame', color: 'text-orange-600', bg: 'bg-orange-100' },
-            { name_en: 'Samaveda', name_hi: 'सामवेद', meaning_en: 'Song & Chants', meaning_hi: 'गीत और मंत्र', desc_en: 'The Veda of melodies and chants.', desc_hi: 'धुनों और मंत्रों का वेद।', icon: 'music', color: 'text-blue-600', bg: 'bg-blue-100' },
-            { name_en: 'Atharvaveda', name_hi: 'अथर्ववेद', meaning_en: 'Daily Life', meaning_hi: 'दैनिक जीवन', desc_en: 'Knowledge for daily procedures and healing.', desc_hi: 'दैनिक प्रक्रियाओं और चिकित्सा का ज्ञान।', icon: 'sparkles', color: 'text-purple-600', bg: 'bg-purple-100' }
-        ];
-
         const FESTIVALS = [
             { name_en: 'Maha Shivratri', name_hi: 'महाशिवरात्रि', date: 'Feb 18', desc_en: 'The Great Night of Shiva', desc_hi: 'शिव की महान रात्रि' },
             { name_en: 'Holi', name_hi: 'होली', date: 'Mar 8', desc_en: 'Festival of Colors', desc_hi: 'रंगों का त्यौहार' },
-            { name_en: 'Ram Navami', name_hi: 'राम नवमी', date: 'Mar 30', desc_en: 'Birth of Lord Rama', desc_hi: 'भगवान राम का जन्म' },
+            { name_en: 'Ram Navami', name_hi: 'राम Navami', date: 'Mar 30', desc_en: 'Birth of Lord Rama', desc_hi: 'भगवान राम का जन्म' },
             { name_en: 'Diwali', name_hi: 'दीपावली', date: 'Nov 12', desc_en: 'Festival of Lights', desc_hi: 'दीपों का त्यौहार' }
         ];
+
+        const PANDITS = [
+            { id: 1, name_en: "Pt. Ramesh Sharma", name_hi: "पं. रमेश शर्मा", loc_en: "Jaipur", loc_hi: "जयपुर", exp: 15, rating: 4.9, tags_en: ["Puja", "Astrology"], tags_hi: ["पूजा", "ज्योतिष"], price: "₹1100", img: "https://images.unsplash.com/photo-1544465492-c4e9515096b7?w=600&h=800&fit=crop&crop=faces", trending: true },
+            { id: 2, name_en: "Pt. Vivek Shastri", name_hi: "पं. विवेक शास्त्री", loc_en: "Jaipur", loc_hi: "जयपुर", exp: 22, rating: 5.0, tags_en: ["Hawan", "Vastu"], tags_hi: ["हवन", "वास्तु"], price: "₹2100", img: "https://images.unsplash.com/photo-1598460596277-bf30c4f82607?w=600&h=800&fit=crop&crop=faces", trending: true },
+            { id: 3, name_en: "Pt. Anand Joshi", name_hi: "पं. आनंद जोशी", loc_en: "Varanasi", loc_hi: "वाराणसी", exp: 12, rating: 4.8, tags_en: ["Astrology"], tags_hi: ["ज्योतिष"], price: "₹501", img: "https://images.unsplash.com/photo-1623321588975-5bbde81cc71f?w=600&h=800&fit=crop&crop=faces", trending: true },
+            { id: 4, name_en: "Pt. Sunil Tiwari", name_hi: "पं. सुनील तिवारी", loc_en: "Jaipur", loc_hi: "जयपुर", exp: 18, rating: 4.7, tags_en: ["Puja", "Vivah"], tags_hi: ["पूजा", "विवाह"], price: "₹5100", img: "https://images.unsplash.com/photo-1605333391781-a6ce9b380f28?w=600&h=800&fit=crop&crop=faces", trending: true },
+            { id: 5, name_en: "Pt. Kedar Nath", name_hi: "पं. केदार नाथ", loc_en: "Ujjain", loc_hi: "उज्जैन", exp: 30, rating: 4.9, tags_en: ["Hawan", "Puja"], tags_hi: ["हवन", "पूजा"], price: "₹1500", img: "https://images.unsplash.com/photo-1532375810152-719969185a85?w=600&h=800&fit=crop&crop=faces", trending: true },
+            { id: 6, name_en: "Pt. Rohan Vyas", name_hi: "पं. रोहन व्यास", loc_en: "Delhi", loc_hi: "दिल्ली", exp: 8, rating: 4.6, tags_en: ["Astrology", "Vastu"], tags_hi: ["ज्योतिष", "वास्तु"], price: "₹1100", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=faces", trending: false },
+            { id: 7, name_en: "Pt. Surya Dixit", name_hi: "पं. सूर्य दीक्षित", loc_en: "Mathura", loc_hi: "मथुरा", exp: 25, rating: 4.9, tags_en: ["Puja", "Vivah"], tags_hi: ["पूजा", "विवाह"], price: "₹3100", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop&crop=faces", trending: false },
+            { id: 8, name_en: "Pt. Manish Pandey", name_hi: "पं. मनीष पांडे", loc_en: "Ayodhya", loc_hi: "अयोध्या", exp: 14, rating: 4.8, tags_en: ["Hawan"], tags_hi: ["हवन"], price: "₹2100", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop&crop=faces", trending: false },
+        ];
+
+        const REGIONAL_TEMPLES = {
+            local: [
+                { name_en: "Govind Dev Ji", name_hi: "गोविंद देव जी", city_en: "Jaipur", city_hi: "जयपुर", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Govind_Dev_Ji_Temple.jpg/800px-Govind_Dev_Ji_Temple.jpg" },
+                { name_en: "Khatu Shyam Ji", name_hi: "खाटू श्याम जी", city_en: "Sikar", city_hi: "सीकर", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Khatu_Shyam_Temple.jpg/800px-Khatu_Shyam_Temple.jpg" },
+                { name_en: "Shrinathji Temple", name_hi: "श्रीनाथजी मंदिर", city_en: "Nathdwara", city_hi: "नाथद्वारा", img: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Shrinathji.jpg" }
+            ],
+            north: [
+                { name_en: "Kashi Vishwanath", name_hi: "काशी विश्वनाथ", city_en: "Varanasi", city_hi: "वाराणसी", img: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Kashi_Vishwanath_Temple_Banaras.jpg" },
+                { name_en: "Golden Temple", name_hi: "स्वर्ण मंदिर", city_en: "Amritsar", city_hi: "अमृतसर", img: "https://upload.wikimedia.org/wikipedia/commons/9/94/Golden_Temple_India.jpg" },
+                { name_en: "Kedarnath", name_hi: "केदारनाथ", city_en: "Uttarakhand", city_hi: "उत्तराखंड", img: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Kedarnath_Temple.jpg" }
+            ],
+            south: [
+                { name_en: "Tirupati Balaji", name_hi: "तिरुपति बालाजी", city_en: "Tirumala", city_hi: "तिरुमला", img: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Tirumala_090615.jpg" },
+                { name_en: "Meenakshi Temple", name_hi: "मीनाक्षी मंदिर", city_en: "Madurai", city_hi: "मदुरै", img: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Madurai_Meenakshi_Amman_Temple.jpg" },
+                { name_en: "Ramanathaswamy", name_hi: "रामनाथस्वामी", city_en: "Rameshwaram", city_hi: "रामेश्वरम", img: "https://upload.wikimedia.org/wikipedia/commons/6/69/Rameswaram_temple.jpg" }
+            ]
+        };
 
         let state = {
             counts: {}, 
@@ -403,7 +518,10 @@
             sankalpaDate: '',
             kundaliData: null,
             chartData: null,
-            language: 'en' // 'en' or 'hi'
+            kundaliQA: [], // For storing Q&A context
+            kundaliQuestionsAsked: 0,
+            language: 'en',
+            panditFilter: 'All'
         };
         
         let timerInterval;
@@ -419,22 +537,19 @@
         let isMantraPlaying = false;
 
         // --- Helper: Translation ---
-        function t(key) {
-            return TRANSLATIONS[state.language][key] || key;
-        }
+        function t(key) { return TRANSLATIONS[state.language][key] || key; }
 
         function toggleLanguage() {
             state.language = state.language === 'en' ? 'hi' : 'en';
             saveState();
-            // Re-render current view
-            const currentView = document.querySelector('.nav-btn i.text-brand-600')?.parentElement?.parentElement?.dataset?.target || 'home';
+            const currentView = document.querySelector('.nav-btn-mobile i.text-brand-600')?.parentElement?.parentElement?.dataset?.target || 
+                                document.querySelector('.nav-btn-desktop.bg-brand-50')?.dataset?.target || 'home';
             router(currentView);
-            // Update Nav Text
             updateNavText();
         }
 
         function updateNavText() {
-            document.querySelectorAll('.nav-btn span').forEach(el => {
+            document.querySelectorAll('[data-translate]').forEach(el => {
                 const key = el.getAttribute('data-translate');
                 if(key) el.innerText = t(key);
             });
@@ -445,7 +560,11 @@
             const saved = localStorage.getItem('ananda_app_state');
             if (saved) {
                 const parsed = JSON.parse(saved);
-                state = { ...state, ...parsed }; // Merge to ensure new keys exist
+                state = { ...state, ...parsed }; 
+                
+                // Initialize new keys if upgrading state
+                if(!state.kundaliQA) state.kundaliQA = [];
+                if(state.kundaliQuestionsAsked === undefined) state.kundaliQuestionsAsked = 0;
                 
                 const today = new Date().toDateString();
                 if (state.sankalpaDate !== today) {
@@ -473,18 +592,72 @@
 
         function renderHeader(title, subtitle = '') {
             return `
-                <div class="px-6 pt-8 pb-4 flex justify-between items-center bg-transparent animate-fade-in">
+                <div class="px-6 pt-8 md:pt-10 pb-6 flex justify-between items-center bg-transparent animate-fade-in">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900 font-serif tracking-tight">${title}</h1>
-                        ${subtitle ? `<p class="text-brand-600 text-xs font-semibold uppercase tracking-wider mt-0.5">${subtitle}</p>` : ''}
+                        <h1 class="text-3xl font-bold text-gray-900 font-serif tracking-tight">${title}</h1>
+                        ${subtitle ? `<p class="text-brand-600 text-xs md:text-sm font-semibold uppercase tracking-wider mt-1.5">${subtitle}</p>` : ''}
                     </div>
                     <div class="flex gap-3 items-center">
-                        <!-- Language Switcher -->
-                        <button onclick="toggleLanguage()" class="px-3 py-1 bg-white border border-brand-200 rounded-full text-xs font-bold text-brand-700 shadow-sm active:scale-95 transition-transform">
+                        <button onclick="toggleLanguage()" class="px-5 py-2 bg-white border border-brand-200 rounded-full text-xs font-bold text-brand-700 shadow-sm active:scale-95 transition-transform hover:bg-brand-50 hover:shadow-md">
                             ${state.language === 'en' ? 'हिन्दी' : 'English'}
                         </button>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-brand-700 shadow-inner border border-white">
-                            <span class="font-serif font-bold text-xl">ॐ</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // New Reusable Premium Glassmorphic Card (Used for both Pandits & Temples)
+        function renderPremiumImageCard({ img, title, subtitle, icon, rating, tags, price, actionText, actionFn, heightClass = "h-[22rem]" }) {
+            const ratingBadge = rating ? `
+                <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-xl px-3 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 z-10 shadow-lg">
+                    <i data-lucide="star" class="w-3.5 h-3.5 fill-brand-400 text-brand-400"></i>
+                    <span class="text-xs font-bold text-white">${rating}</span>
+                </div>
+            ` : '';
+
+            const tagsHtml = tags && tags.length ? `
+                <div class="flex flex-wrap gap-2 my-2">
+                    ${tags.map(tag => `
+                        <span class="px-3 py-1 bg-white/10 backdrop-blur-md text-white rounded-full text-[10px] font-bold border border-white/20 shadow-sm">${tag}</span>
+                    `).join('')}
+                </div>
+            ` : '';
+
+            const footerHtml = price && actionText ? `
+                <div class="flex items-center justify-between pt-4 border-t border-white/20 mt-2">
+                    <span class="text-xl font-bold text-white font-serif drop-shadow-md">${price}</span>
+                    <button class="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-white rounded-full text-sm font-bold shadow-lg shadow-brand-500/30 transition-all active:scale-95" onclick="event.stopPropagation(); ${actionFn}">
+                        ${actionText}
+                    </button>
+                </div>
+            ` : (actionText ? `
+                <div class="pt-3 border-t border-white/20 mt-2">
+                    <button class="w-full py-3 bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white rounded-full text-sm font-bold shadow-lg transition-all border border-white/30 active:scale-95 flex justify-center items-center gap-2" onclick="event.stopPropagation(); ${actionFn}">
+                        ${icon ? `<i data-lucide="${icon}" class="w-4 h-4"></i>` : ''} ${actionText}
+                    </button>
+                </div>
+            ` : '');
+
+            return `
+                <div class="flex-shrink-0 w-64 md:w-72 ${heightClass} rounded-[2rem] overflow-hidden group cursor-pointer relative shadow-2xl shadow-brand-900/10 border border-gray-100" onclick="${actionFn || ''}">
+                    <!-- Full Image Background -->
+                    <img src="${img}" alt="${title}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    
+                    <!-- Beautiful Deep Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-mystic-900/95 via-mystic-900/30 to-black/10"></div>
+                    
+                    ${ratingBadge}
+
+                    <!-- Bottom Content Area -->
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 flex flex-col justify-end h-full pointer-events-none">
+                        <div class="pointer-events-auto">
+                            <h4 class="font-bold text-white text-2xl font-serif leading-tight drop-shadow-lg">${title}</h4>
+                            <p class="text-xs text-white/80 font-medium flex items-center gap-1.5 mt-1.5 drop-shadow-md">
+                                <i data-lucide="${icon || 'map-pin'}" class="w-3.5 h-3.5 text-brand-400"></i> ${subtitle}
+                            </p>
+                            
+                            ${tagsHtml}
+                            ${footerHtml}
                         </div>
                     </div>
                 </div>
@@ -493,13 +666,27 @@
 
         function renderHome() {
             const totalChants = Object.values(state.counts).reduce((acc, curr) => acc + curr.total, 0);
+            
             const festivalHtml = FESTIVALS.map(f => `
-                <div class="flex-shrink-0 w-32 p-3 bg-white rounded-xl border border-brand-100 shadow-sm text-center">
-                    <p class="text-xs text-brand-500 font-bold uppercase tracking-wide">${f.date}</p>
-                    <h5 class="text-sm font-bold text-gray-800 my-1 truncate">${state.language === 'en' ? f.name_en : f.name_hi}</h5>
-                    <p class="text-[10px] text-gray-400 truncate">${state.language === 'en' ? f.desc_en : f.desc_hi}</p>
+                <div class="flex-shrink-0 w-40 md:w-48 p-5 bg-white rounded-[2rem] border border-gray-100 shadow-sm text-center hover:border-brand-300 hover:shadow-md transition-all group">
+                    <p class="text-xs text-brand-500 font-bold uppercase tracking-widest mb-1 group-hover:text-brand-600 transition-colors">${f.date}</p>
+                    <h5 class="text-sm md:text-base font-bold text-gray-800 mb-1.5 truncate font-serif">${state.language === 'en' ? f.name_en : f.name_hi}</h5>
+                    <p class="text-[10px] md:text-xs text-gray-400 truncate font-medium">${state.language === 'en' ? f.desc_en : f.desc_hi}</p>
                 </div>
             `).join('');
+
+            const trendingPanditsHtml = PANDITS.filter(p => p.trending).map(p => 
+                renderPremiumImageCard({
+                    img: p.img,
+                    title: state.language === 'en' ? p.name_en : p.name_hi,
+                    subtitle: `${state.language === 'en' ? p.loc_en : p.loc_hi} • ${p.exp} Yrs`,
+                    rating: p.rating,
+                    tags: (state.language === 'en' ? p.tags_en : p.tags_hi).slice(0, 2),
+                    price: p.price,
+                    actionText: t('btn_book_now'),
+                    actionFn: `bookAppointment('${state.language === 'en' ? p.name_en : p.name_hi}')`
+                })
+            ).join('');
             
             const dateStr = state.language === 'en' 
                 ? new Date().toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })
@@ -508,167 +695,275 @@
             return `
                 ${renderHeader(t('greeting') + ', ' + state.userName, dateStr)}
                 
-                <div class="px-6 space-y-8 pb-8 pt-2">
+                <div class="px-6 space-y-10 pb-8 pt-2 max-w-6xl mx-auto">
                     
-                    <!-- Founder Profile (HERO SECTION - Main Selling Point) -->
-                    <div class="animate-slide-up">
-                        <div class="card-founder rounded-3xl p-6 shadow-xl relative overflow-hidden">
-                             <!-- Header -->
-                             <div class="flex gap-5 mb-5 relative z-10">
-                                <div class="w-20 h-20 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 shadow-lg border-4 border-white flex-shrink-0 overflow-hidden relative">
-                                     <span class="font-serif text-3xl font-bold">Pt</span>
-                                     <div class="absolute inset-0 border-2 border-brand-500 rounded-full opacity-20"></div>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="text-xl font-bold text-gray-900 font-serif leading-tight">Pt. Brahmdatt Sharma</h4>
-                                    <p class="text-xs text-brand-700 font-bold uppercase tracking-wide mt-1 mb-2">${t('founder_title')}</p>
-                                    <div class="flex items-center gap-2 text-gray-600 text-xs bg-white/70 w-fit px-3 py-1 rounded-full border border-brand-100">
-                                        <i data-lucide="award" class="w-3 h-3 text-brand-600"></i> ${t('founder_exp')}
+                    <!-- Top Grid for PC / Stack on Mobile -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Founder Profile -->
+                        <div class="animate-slide-up">
+                            <div class="card-founder rounded-[2rem] p-8 shadow-2xl shadow-gold/5 relative overflow-hidden h-full flex flex-col justify-center">
+                                 <div class="flex gap-6 mb-6 relative z-10 items-center">
+                                    <div class="w-24 h-24 rounded-full bg-brand-50 flex items-center justify-center text-brand-700 shadow-xl border-4 border-white flex-shrink-0 overflow-hidden relative">
+                                         <span class="font-serif text-4xl font-bold">Pt</span>
+                                         <div class="absolute inset-0 border-[3px] border-brand-500 rounded-full opacity-20"></div>
                                     </div>
-                                </div>
-                             </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-2xl md:text-3xl font-bold text-gray-900 font-serif leading-tight">Pt. Brahmdatt Sharma</h4>
+                                        <p class="text-xs md:text-sm text-brand-700 font-bold uppercase tracking-widest mt-1.5 mb-3">${t('founder_title')}</p>
+                                        <div class="flex items-center gap-2 text-gray-700 font-medium text-xs bg-white/80 w-fit px-4 py-1.5 rounded-full border border-brand-100 shadow-sm">
+                                            <i data-lucide="award" class="w-3.5 h-3.5 text-brand-600"></i> ${t('founder_exp')}
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <button onclick="bookAppointment('Pt. Brahmdatt Sharma')" class="w-full bg-gradient-to-r from-gray-900 to-mystic-900 text-white py-4 rounded-full font-bold shadow-xl shadow-gray-900/20 active:scale-95 transition-transform flex items-center justify-center gap-2.5 relative z-10 text-sm hover:from-brand-600 hover:to-brand-700">
+                                    <i data-lucide="phone-call" class="w-4.5 h-4.5"></i>
+                                    ${t('book_btn')}
+                                 </button>
+                                 <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-brand-100 to-transparent rounded-full opacity-50 blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                            </div>
+                        </div>
 
-                             <!-- Services -->
-                             <div class="mb-6 relative z-10">
-                                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 border-b border-brand-200 pb-1 w-fit">${t('services_title')}</p>
-                                <div class="grid grid-cols-2 gap-2.5">
-                                    <div class="flex items-center gap-2 text-xs text-gray-800 bg-white/50 p-2 rounded-lg border border-white">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> ${t('svc_kundali')}
+                        <div class="flex flex-col gap-8">
+                            <!-- Sankalpa Input -->
+                            <div class="animate-slide-up delay-100 flex-shrink-0">
+                                <div class="bg-white p-6 rounded-[2rem] shadow-lg shadow-gray-200/50 border border-gray-100 relative overflow-hidden group">
+                                    <label class="flex items-center gap-2 text-xs font-bold text-brand-600 uppercase tracking-widest mb-3 z-10 relative">
+                                        <i data-lucide="sun" class="w-4 h-4"></i> ${t('sankalpa_label')}
+                                    </label>
+                                    <input type="text" 
+                                        value="${state.sankalpa}" 
+                                        oninput="updateSankalpa(this.value)"
+                                        placeholder="${t('sankalpa_ph')}" 
+                                        class="w-full bg-gray-50/50 px-4 py-3 rounded-xl border border-gray-200 text-lg font-serif text-gray-800 placeholder-gray-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:bg-white focus:outline-none transition-all relative z-10"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Tools -->
+                            <div class="grid grid-cols-2 gap-5 animate-slide-up delay-200 flex-1">
+                                <div class="bg-white p-6 rounded-[2rem] flex flex-col justify-between h-full group hover:border-brand-300 border border-gray-100 shadow-lg shadow-gray-200/50 transition-all">
+                                    <div class="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600 group-hover:scale-110 transition-transform mb-4">
+                                        <i data-lucide="activity" class="w-6 h-6"></i>
                                     </div>
-                                    <div class="flex items-center gap-2 text-xs text-gray-800 bg-white/50 p-2 rounded-lg border border-white">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> ${t('svc_hawan')}
-                                    </div>
-                                    <div class="flex items-center gap-2 text-xs text-gray-800 bg-white/50 p-2 rounded-lg border border-white">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> ${t('svc_vivah')}
-                                    </div>
-                                    <div class="flex items-center gap-2 text-xs text-gray-800 bg-white/50 p-2 rounded-lg border border-white">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div> ${t('svc_vastu')}
+                                    <div>
+                                        <span class="text-4xl font-bold text-gray-900 block font-serif tracking-tight">${totalChants}</span>
+                                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1 block">${t('quick_mantras')}</span>
                                     </div>
                                 </div>
-                             </div>
 
-                             <!-- CTA -->
-                             <button onclick="bookAppointment()" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-gray-400/30 active:scale-95 transition-transform flex items-center justify-center gap-2 relative z-10 text-sm">
-                                <i data-lucide="phone-call" class="w-4 h-4 text-brand-300"></i>
-                                ${t('book_btn')}
-                             </button>
-                             
-                             <!-- Decor -->
-                             <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-brand-100 to-transparent rounded-full opacity-60 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                                <div onclick="openMeditationSetup()" class="bg-white p-6 rounded-[2rem] flex flex-col justify-between h-full cursor-pointer group hover:border-indigo-300 border border-gray-100 shadow-lg shadow-gray-200/50 transition-all">
+                                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform mb-4">
+                                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xl md:text-2xl font-bold text-gray-900 block font-serif tracking-tight">${t('dhyana_title')}</span>
+                                        <span class="text-[10px] text-indigo-500 font-bold uppercase tracking-widest flex items-center gap-1 mt-1.5">
+                                            ${t('dhyana_sub')} <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Sankalpa Input -->
-                    <div class="animate-slide-up delay-100">
-                        <div class="card-premium p-5 rounded-2xl relative overflow-hidden group">
-                            <label class="flex items-center gap-2 text-[10px] font-bold text-brand-600 uppercase tracking-widest mb-3 z-10 relative">
-                                <i data-lucide="sun" class="w-3 h-3"></i> ${t('sankalpa_label')}
-                            </label>
-                            <input type="text" 
-                                value="${state.sankalpa}" 
-                                oninput="updateSankalpa(this.value)"
-                                placeholder="${t('sankalpa_ph')}" 
-                                class="w-full bg-transparent border-b-2 border-brand-100 pb-2 text-lg font-serif text-gray-800 placeholder-gray-300 focus:border-brand-500 focus:outline-none transition-colors relative z-10"
-                            >
+                    <!-- Trending Pandits (Optimized Glassmorphic UI) -->
+                    <div class="animate-slide-up delay-150">
+                        <div class="flex items-center justify-between mb-5 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm md:text-base uppercase tracking-widest flex items-center gap-2">
+                                <i data-lucide="trending-up" class="w-5 h-5 text-brand-500"></i>
+                                ${t('trending_pandits')}
+                             </h3>
+                             <button onclick="router('pandits')" class="text-xs font-bold text-brand-600 flex items-center hover:underline px-3 py-1.5 rounded-full hover:bg-brand-50 transition-colors">View All <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-0.5"></i></button>
+                        </div>
+                        <div class="flex gap-6 overflow-x-auto no-scrollbar pb-8 pt-2 -mx-6 px-6 md:mx-0 md:px-0">
+                            ${trendingPanditsHtml}
                         </div>
                     </div>
 
                     <!-- Upcoming Festivals -->
                     <div class="animate-slide-up delay-200">
-                        <div class="flex items-center justify-between mb-3 px-1">
-                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">${t('festivals_title')}</h3>
+                        <div class="flex items-center justify-between mb-5 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm md:text-base uppercase tracking-widest">${t('festivals_title')}</h3>
                         </div>
-                        <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
+                        <div class="flex gap-5 overflow-x-auto no-scrollbar pb-4 -mx-6 px-6 md:mx-0 md:px-0">
                             ${festivalHtml}
                         </div>
                     </div>
 
-                    <!-- Quick Tools -->
-                    <div class="grid grid-cols-2 gap-4 animate-slide-up delay-200">
-                        <div class="card-premium p-5 rounded-2xl flex flex-col justify-between h-32 group hover:border-brand-200 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center text-brand-600 group-hover:scale-110 transition-transform">
-                                <i data-lucide="activity" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <span class="text-3xl font-bold text-gray-900 block font-serif">${totalChants}</span>
-                                <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">${t('quick_mantras')}</span>
-                            </div>
-                        </div>
-
-                        <div onclick="openMeditationSetup()" class="card-premium p-5 rounded-2xl flex flex-col justify-between h-32 cursor-pointer group hover:border-indigo-200 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
-                                <i data-lucide="brain-circuit" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <span class="text-lg font-bold text-gray-900 block font-serif">${t('dhyana_title')}</span>
-                                <span class="text-[10px] text-indigo-400 font-bold uppercase tracking-wider flex items-center gap-1">
-                                    ${t('dhyana_sub')} <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Discover Section -->
+                    <!-- Discover Section (Including Vedas) -->
                      <div class="animate-slide-up delay-300">
-                        <div class="flex items-center justify-between mb-3 px-1">
-                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">${t('discover_title')}</h3>
+                        <div class="flex items-center justify-between mb-5 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm md:text-base uppercase tracking-widest">${t('discover_title')}</h3>
                         </div>
-                        <div class="space-y-3">
-                            <div onclick="router('kundali')" class="group flex items-center p-4 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:bg-white transition-all">
-                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200 group-hover:scale-105 transition-transform">
-                                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            <div class="group flex items-center p-6 bg-white rounded-[2rem] shadow-md shadow-gray-200/50 border border-gray-100 hover:border-amber-300 hover:shadow-lg transition-all cursor-pointer" onclick="alert('Vedas Module Coming Soon!')">
+                                <div class="w-16 h-16 rounded-[1.25rem] bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-xl shadow-amber-200/50 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="book-open" class="w-7 h-7"></i>
                                 </div>
-                                <div class="ml-4 flex-1">
-                                    <h4 class="font-bold text-gray-800 text-lg">${t('feature_kundali_title')}</h4>
-                                    <p class="text-xs text-gray-500 mt-0.5">${t('feature_kundali_sub')}</p>
+                                <div class="ml-5 flex-1">
+                                    <h4 class="font-bold text-gray-900 text-lg font-serif">${t('feature_vedas_title')}</h4>
+                                    <p class="text-xs text-gray-500 mt-1 font-medium">${t('feature_vedas_sub')}</p>
                                 </div>
-                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-auto group-hover:text-indigo-500 transition-colors"></i>
+                                <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-amber-50 transition-colors ml-auto">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-amber-600"></i>
+                                </div>
                             </div>
 
-                             <div onclick="router('temples')" class="group flex items-center p-4 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:bg-white transition-all">
-                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-400 to-red-500 flex items-center justify-center text-white shadow-lg shadow-orange-200 group-hover:scale-105 transition-transform">
-                                    <i data-lucide="map" class="w-6 h-6"></i>
+                            <div onclick="router('kundali')" class="group flex items-center p-6 bg-white rounded-[2rem] shadow-md shadow-gray-200/50 border border-gray-100 hover:border-indigo-300 hover:shadow-lg transition-all cursor-pointer">
+                                <div class="w-16 h-16 rounded-[1.25rem] bg-gradient-to-br from-indigo-500 to-mystic-800 flex items-center justify-center text-white shadow-xl shadow-indigo-300/50 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="sparkles" class="w-7 h-7"></i>
                                 </div>
-                                <div class="ml-4 flex-1">
-                                    <h4 class="font-bold text-gray-800 text-lg">${t('feature_temples_title')}</h4>
-                                    <p class="text-xs text-gray-500 mt-0.5">${t('feature_temples_sub')}</p>
+                                <div class="ml-5 flex-1">
+                                    <h4 class="font-bold text-gray-900 text-lg font-serif">${t('feature_kundali_title')}</h4>
+                                    <p class="text-xs text-gray-500 mt-1 font-medium">${t('feature_kundali_sub')}</p>
                                 </div>
-                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-auto group-hover:text-brand-500 transition-colors"></i>
+                                <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-indigo-50 transition-colors ml-auto">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-indigo-600"></i>
+                                </div>
                             </div>
-                            
-                            <div onclick="router('vedas')" class="group flex items-center p-4 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:bg-white transition-all">
-                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-lg shadow-amber-200 group-hover:scale-105 transition-transform">
-                                    <i data-lucide="book-open" class="w-6 h-6"></i>
+
+                             <div onclick="router('temples')" class="group flex items-center p-6 bg-white rounded-[2rem] shadow-md shadow-gray-200/50 border border-gray-100 hover:border-brand-300 hover:shadow-lg transition-all cursor-pointer">
+                                <div class="w-16 h-16 rounded-[1.25rem] bg-gradient-to-br from-brand-400 to-red-500 flex items-center justify-center text-white shadow-xl shadow-brand-300/50 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="map" class="w-7 h-7"></i>
                                 </div>
-                                <div class="ml-4 flex-1">
-                                    <h4 class="font-bold text-gray-800 text-lg">${t('feature_vedas_title')}</h4>
-                                    <p class="text-xs text-gray-500 mt-0.5">${t('feature_vedas_sub')}</p>
+                                <div class="ml-5 flex-1">
+                                    <h4 class="font-bold text-gray-900 text-lg font-serif">${t('feature_temples_title')}</h4>
+                                    <p class="text-xs text-gray-500 mt-1 font-medium">${t('feature_temples_sub')}</p>
                                 </div>
-                                <i data-lucide="chevron-right" class="w-5 h-5 text-gray-300 ml-auto group-hover:text-amber-500 transition-colors"></i>
+                                <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-brand-50 transition-colors ml-auto">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-brand-600"></i>
+                                </div>
                             </div>
                         </div>
                      </div>
+                </div>
+            `;
+        }
 
-                    <!-- Gallery -->
-                    <div class="animate-slide-up delay-300">
-                        <div class="flex items-center justify-between mb-3 px-1">
-                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">${t('gallery_title')}</h3>
+        function setPanditFilter(filter) {
+            state.panditFilter = filter;
+            router('pandits');
+        }
+
+        function renderPandits() {
+            const filters = ['All', 'Puja', 'Vastu', 'Astrology'];
+            const filterHtml = filters.map(f => `
+                <button onclick="setPanditFilter('${f}')" 
+                    class="px-6 py-2.5 rounded-full text-xs md:text-sm font-bold whitespace-nowrap transition-all border ${state.panditFilter === f ? 'bg-brand-600 text-white border-brand-600 shadow-lg shadow-brand-500/30' : 'bg-white text-gray-600 border-gray-200 hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 shadow-sm'}">
+                    ${f === 'All' ? t('filter_all') : t('filter_' + f.toLowerCase())}
+                </button>
+            `).join('');
+
+            const filteredPandits = PANDITS.filter(p => {
+                if (state.panditFilter === 'All') return true;
+                const searchTag = state.language === 'en' ? state.panditFilter : t('filter_' + state.panditFilter.toLowerCase());
+                return p.tags_en.includes(state.panditFilter) || p.tags_hi.includes(searchTag);
+            });
+
+            const panditsHtml = filteredPandits.map(p => 
+                renderPremiumImageCard({
+                    img: p.img,
+                    title: state.language === 'en' ? p.name_en : p.name_hi,
+                    subtitle: `${state.language === 'en' ? p.loc_en : p.loc_hi} • ${p.exp} Yrs`,
+                    rating: p.rating,
+                    tags: (state.language === 'en' ? p.tags_en : p.tags_hi).slice(0, 2),
+                    price: p.price,
+                    actionText: t('btn_book_now'),
+                    actionFn: `bookAppointment('${state.language === 'en' ? p.name_en : p.name_hi}')`
+                })
+            ).join('');
+
+            return `
+                ${renderHeader(t('pandit_header'), t('pandit_sub'))}
+                
+                <div class="px-6 py-4 animate-slide-up max-w-6xl mx-auto">
+                    <!-- Filters -->
+                    <div class="flex gap-3 overflow-x-auto no-scrollbar pb-6 mb-4 -mx-6 px-6 md:mx-0 md:px-0">
+                        ${filterHtml}
+                    </div>
+
+                    <!-- Optimized Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-10 justify-items-center sm:justify-items-stretch">
+                        ${panditsHtml.length ? panditsHtml : `<div class="col-span-full text-center py-20 bg-white rounded-[2rem] border border-gray-100 shadow-sm w-full"><i data-lucide="search" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i><p class="text-gray-500 font-medium">No pandits found for this category.</p></div>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTemples() {
+            const renderTempleSection = (titleKey, dataKey) => {
+                const temples = REGIONAL_TEMPLES[dataKey];
+                const cards = temples.map(tData => 
+                    renderPremiumImageCard({
+                        img: tData.img,
+                        title: state.language === 'en' ? tData.name_en : tData.name_hi,
+                        subtitle: state.language === 'en' ? tData.city_en : tData.city_hi,
+                        actionText: "Open Map",
+                        icon: "navigation",
+                        actionFn: `window.open('https://www.google.com/maps/search/${encodeURIComponent(tData.name_en)}+temple+${encodeURIComponent(tData.city_en)}', '_blank')`,
+                        heightClass: "h-64" // Slightly shorter for temples
+                    })
+                ).join('');
+
+                return `
+                    <div class="mb-10 animate-slide-up">
+                        <h3 class="font-bold text-gray-900 text-sm md:text-base uppercase tracking-widest mb-5 px-1">${t(titleKey)}</h3>
+                        <div class="flex gap-6 overflow-x-auto no-scrollbar pb-6 -mx-6 px-6 md:mx-0 md:px-0">
+                            ${cards}
                         </div>
-                        <div class="flex overflow-x-auto space-x-4 pb-6 no-scrollbar -mx-6 px-6">
-                            <div class="flex-shrink-0 w-64 h-40 rounded-2xl relative overflow-hidden shadow-md group border border-gray-100">
-                                <img src="https://images.unsplash.com/photo-1603038618456-4c424f4640d2?q=80&w=400&auto=format&fit=crop" alt="Hawan" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <p class="font-bold text-base font-serif">Maha Yajna</p>
+                    </div>
+                `;
+            };
+
+            return `
+                ${renderHeader(t('temple_header'), t('temple_sub'))}
+                
+                <div class="px-6 py-6 max-w-6xl mx-auto space-y-6">
+                    <!-- Locate Near Me Action -->
+                    <div class="bg-gradient-to-br from-white to-brand-50/80 flex flex-col md:flex-row items-center gap-6 p-8 rounded-[2rem] shadow-xl shadow-brand-100/50 border border-brand-100 animate-slide-up mb-10">
+                        <div class="w-20 h-20 bg-white rounded-[1.5rem] flex items-center justify-center text-brand-600 flex-shrink-0 shadow-md">
+                            <i data-lucide="map" class="w-10 h-10"></i>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-gray-900 font-serif mb-2">${t('temple_card_title')}</h3>
+                            <p class="text-gray-500 font-medium">${t('temple_card_desc')}</p>
+                        </div>
+                        <button onclick="findTemples()" class="w-full md:w-auto px-8 bg-brand-600 text-white py-4 rounded-full font-bold shadow-lg shadow-brand-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2 text-base">
+                            <i data-lucide="crosshair" class="w-5 h-5"></i>
+                            ${t('btn_locate')}
+                        </button>
+                    </div>
+
+                    ${renderTempleSection('region_local', 'local')}
+                    ${renderTempleSection('region_north', 'north')}
+                    ${renderTempleSection('region_south', 'south')}
+
+                    <!-- Virtual Darshan -->
+                    <div class="animate-slide-up mb-10 border-t border-gray-100 pt-8">
+                        <div class="flex items-center justify-between mb-5 px-1">
+                             <h3 class="font-bold text-gray-900 text-sm md:text-base uppercase tracking-widest flex items-center gap-2">
+                                ${t('live_darshan')} <i data-lucide="video" class="w-5 h-5 text-red-500 animate-pulse"></i>
+                             </h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <a href="https://www.youtube.com/results?search_query=live+darshan+tirupati" target="_blank" class="block bg-white p-4 rounded-[2rem] shadow-lg shadow-gray-200/50 border border-gray-100 group hover:border-brand-300 transition-all">
+                                <div class="h-40 bg-gray-100 rounded-[1.5rem] mb-4 bg-cover bg-center shadow-inner relative overflow-hidden" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Tirumala_090615.jpg')">
+                                    <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                                    <div class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5 animate-pulse">
+                                        <div class="w-1.5 h-1.5 bg-white rounded-full"></div> LIVE
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex-shrink-0 w-64 h-40 rounded-2xl relative overflow-hidden shadow-md group border border-gray-100">
-                                <img src="https://images.unsplash.com/photo-1544465492-c4e9515096b7?q=80&w=400&auto=format&fit=crop" alt="Pooja" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <p class="font-bold text-base font-serif">Ganesh Puja</p>
+                                <h5 class="font-bold text-lg text-gray-900 font-serif px-2 text-center">${state.language === 'en' ? 'Tirupati Balaji' : 'तिरुपति बालाजी'}</h5>
+                            </a>
+                            <a href="https://www.youtube.com/results?search_query=live+darshan+golden+temple" target="_blank" class="block bg-white p-4 rounded-[2rem] shadow-lg shadow-gray-200/50 border border-gray-100 group hover:border-brand-300 transition-all">
+                                <div class="h-40 bg-gray-100 rounded-[1.5rem] mb-4 bg-cover bg-center shadow-inner relative overflow-hidden" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/94/Golden_Temple_India.jpg')">
+                                    <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                                    <div class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5 animate-pulse">
+                                        <div class="w-1.5 h-1.5 bg-white rounded-full"></div> LIVE
+                                    </div>
                                 </div>
-                            </div>
+                                <h5 class="font-bold text-lg text-gray-900 font-serif px-2 text-center">${state.language === 'en' ? 'Golden Temple' : 'स्वर्ण मंदिर'}</h5>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -685,142 +980,77 @@
 
             const selectorHtml = Object.entries(GODS).map(([key, data]) => `
                 <button onclick="changeGod('${key}')" 
-                    class="flex flex-col items-center min-w-[72px] space-y-2 transition-all duration-300 ${state.currentGod === key ? 'opacity-100 scale-105' : 'opacity-60 scale-95 grayscale hover:grayscale-0'}">
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${data.color} flex items-center justify-center text-white shadow-lg ${state.currentGod === key ? 'ring-2 ring-offset-2 ring-' + data.color.split(' ')[1] : ''}">
-                        <span class="text-lg font-bold font-serif">${state.language === 'en' ? data.name_en.split(' ')[0][0] : data.name_hi.split(' ')[0][0]}</span>
+                    class="flex flex-col items-center min-w-[72px] md:min-w-[88px] space-y-2 transition-all duration-300 ${state.currentGod === key ? 'opacity-100 scale-105' : 'opacity-50 scale-90 grayscale hover:grayscale-0 hover:opacity-80'}">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-[1.5rem] bg-gradient-to-br ${data.color} flex items-center justify-center text-white shadow-xl ${state.currentGod === key ? 'ring-4 ring-offset-4 ring-' + data.color.split(' ')[1] : ''}">
+                        <span class="text-2xl md:text-3xl font-bold font-serif">${state.language === 'en' ? data.name_en.split(' ')[0][0] : data.name_hi.split(' ')[0][0]}</span>
                     </div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-600 truncate w-full text-center">${state.language === 'en' ? (data.name_en.split(' ')[1] || data.name_en) : data.name_hi}</span>
+                    <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-600 truncate w-full text-center mt-2">${state.language === 'en' ? (data.name_en.split(' ')[1] || data.name_en) : data.name_hi}</span>
                 </button>
             `).join('');
 
             return `
                 ${renderHeader(t('jaap_header'), t('jaap_sub'))}
                 
-                <div class="px-6 py-6 animate-slide-up">
-                    <div class="flex space-x-2 overflow-x-auto no-scrollbar pb-2 mb-4">
+                <div class="px-6 py-6 animate-slide-up max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center justify-center min-h-[65vh]">
+                    
+                    <!-- Sidebar Selector on Desktop, Top on Mobile -->
+                    <div class="flex md:flex-col space-x-3 md:space-x-0 md:space-y-6 overflow-x-auto md:overflow-y-auto no-scrollbar pb-4 mb-4 md:mb-0 md:h-[450px] w-full md:w-auto px-2">
                         ${selectorHtml}
                     </div>
 
-                    <div class="flex flex-col items-center justify-center min-h-[50vh] relative">
+                    <!-- Main Interactable -->
+                    <div class="flex flex-col items-center justify-center relative flex-1">
                         
-                        <!-- Main Chant Circle -->
-                        <div class="relative w-72 h-72">
-                            <div class="absolute inset-0 rounded-full border-[3px] border-gray-100"></div>
-                            <div class="absolute inset-0 rounded-full border-[3px] border-transparent border-t-current" style="color: ${god.accent}; transform: rotate(${progress * 3.6}deg); transition: transform 0.3s ease;"></div>
+                        <div class="relative w-[19rem] h-[19rem] md:w-[26rem] md:h-[26rem]">
+                            <div class="absolute inset-0 rounded-full border-[4px] border-white/40 shadow-inner"></div>
+                            <div class="absolute inset-0 rounded-full border-[5px] border-transparent border-t-current drop-shadow-md" style="color: ${god.accent}; transform: rotate(${progress * 3.6}deg); transition: transform 0.3s ease;"></div>
                             
-                            <button id="jaap-btn" class="absolute inset-2 rounded-full jaap-circle flex flex-col items-center justify-center text-white shadow-2xl shadow-orange-500/30 group outline-none active:scale-95 transition-transform duration-100 overflow-hidden" onclick="handleChant(event)">
-                                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity"></div>
-                                <span class="text-6xl font-serif mb-1">ॐ</span>
-                                <span class="text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">${t('tap_chant')}</span>
+                            <button id="jaap-btn" class="absolute inset-3 md:inset-5 rounded-full jaap-circle flex flex-col items-center justify-center text-white shadow-[0_20px_50px_-10px_rgba(217,119,6,0.6)] group outline-none active:scale-[0.97] transition-transform duration-150 overflow-hidden" onclick="handleChant(event)">
+                                <div class="absolute inset-0 bg-white opacity-0 group-active:opacity-10 transition-opacity"></div>
+                                <span class="text-[5rem] md:text-[7rem] font-serif mb-2 md:mb-4 drop-shadow-lg">ॐ</span>
+                                <span class="text-[11px] md:text-sm font-bold tracking-[0.4em] md:tracking-[0.5em] uppercase opacity-90 drop-shadow-md">${t('tap_chant')}</span>
                             </button>
                         </div>
 
-                        <!-- Interactive Actions (Flower & Audio) -->
-                        <div class="flex gap-4 mt-8 mb-4">
-                            <button onclick="offerFlowers(event)" class="bg-white p-3 rounded-full shadow-lg border border-gray-100 text-pink-500 active:scale-90 transition-transform relative overflow-hidden" title="Offer Flowers">
-                                <i data-lucide="flower-2" class="w-6 h-6"></i>
+                        <div class="flex gap-8 mt-12 mb-6">
+                            <button onclick="offerFlowers(event)" class="bg-white/80 backdrop-blur-md p-5 rounded-full shadow-lg border border-white/50 text-pink-500 hover:scale-110 hover:bg-white active:scale-95 transition-all relative overflow-hidden" title="Offer Flowers">
+                                <i data-lucide="flower-2" class="w-8 h-8"></i>
                             </button>
                             
-                            <button onclick="toggleMantraAudio()" class="bg-white p-3 rounded-full shadow-lg border border-gray-100 ${isMantraPlaying ? 'text-brand-600 border-brand-200' : 'text-gray-400'} active:scale-90 transition-all" title="Play Mantra">
-                                <i id="mantra-icon" data-lucide="${isMantraPlaying ? 'pause' : 'play'}" class="w-6 h-6"></i>
+                            <button onclick="toggleMantraAudio()" class="bg-white/80 backdrop-blur-md p-5 rounded-full shadow-lg border border-white/50 ${isMantraPlaying ? 'text-brand-600 bg-white border-brand-200 ring-2 ring-brand-100 ring-offset-2' : 'text-gray-400'} hover:scale-110 hover:bg-white active:scale-95 transition-all" title="Play Mantra">
+                                <i id="mantra-icon" data-lucide="${isMantraPlaying ? 'pause' : 'play'}" class="w-8 h-8"></i>
                             </button>
                         </div>
+                    </div>
 
-                        <!-- Info Card -->
-                        <div class="card-premium px-8 py-6 rounded-3xl text-center w-full max-w-xs relative overflow-hidden">
-                             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${god.color}"></div>
-                             
-                             <h2 class="text-2xl font-bold text-gray-900 font-serif mb-1">${displayName}</h2>
-                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">${god.mantra}</p>
-                             
-                             <div class="flex justify-between items-center px-4">
-                                <div class="text-center">
-                                    <span class="block text-3xl font-bold text-gray-800 tabular-nums" id="current-count">${stats.total % 108}</span>
-                                    <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">${t('beads')}</span>
-                                </div>
-                                <div class="w-px h-8 bg-gray-200"></div>
-                                <div class="text-center">
-                                    <span class="block text-3xl font-bold text-gray-800 tabular-nums" id="mala-count">${stats.malas}</span>
-                                    <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">${t('malas')}</span>
-                                </div>
-                             </div>
-                        </div>
+                    <!-- Stats Card -->
+                    <div class="bg-white/80 backdrop-blur-2xl px-10 py-10 rounded-[2.5rem] text-center w-full max-w-sm relative overflow-hidden shadow-2xl shadow-indigo-900/5 border border-white/60">
+                         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${god.color}"></div>
+                         
+                         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif mb-3">${displayName}</h2>
+                         <p class="text-xs md:text-sm font-bold text-brand-600 uppercase tracking-widest mb-10 bg-brand-50 inline-block px-4 py-1.5 rounded-full border border-brand-100">${god.mantra}</p>
+                         
+                         <div class="flex justify-between items-center px-4">
+                            <div class="text-center w-1/2">
+                                <span class="block text-5xl md:text-6xl font-bold text-gray-800 tabular-nums font-serif tracking-tighter" id="current-count">${stats.total % 108}</span>
+                                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-widest mt-2 block">${t('beads')}</span>
+                            </div>
+                            <div class="w-px h-16 bg-gray-200 rounded-full"></div>
+                            <div class="text-center w-1/2">
+                                <span class="block text-5xl md:text-6xl font-bold text-gray-800 tabular-nums font-serif tracking-tighter" id="mala-count">${stats.malas}</span>
+                                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-widest mt-2 block">${t('malas')}</span>
+                            </div>
+                         </div>
                     </div>
                 </div>
             `;
         }
 
-        function renderVedas() {
-            const cards = VEDAS.map((veda, index) => `
-                <div class="card-premium p-6 rounded-2xl flex gap-5 animate-slide-up group hover:shadow-md transition-all" style="animation-delay: ${index * 100}ms">
-                    <div class="w-14 h-14 rounded-2xl ${veda.bg} flex-shrink-0 flex items-center justify-center ${veda.color} shadow-sm group-hover:scale-105 transition-transform">
-                        <i data-lucide="${veda.icon}" class="w-7 h-7"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900 font-serif mb-1">${state.language === 'en' ? veda.name_en : veda.name_hi}</h3>
-                        <p class="text-[10px] ${veda.color} font-bold uppercase tracking-widest mb-2">${state.language === 'en' ? veda.meaning_en : veda.meaning_hi}</p>
-                        <p class="text-sm text-gray-500 leading-relaxed">${state.language === 'en' ? veda.desc_en : veda.desc_hi}</p>
-                    </div>
-                </div>
-            `).join('');
-
-            return `
-                ${renderHeader(t('vedas_header'), t('vedas_sub'))}
-                <div class="px-6 py-6 space-y-4">
-                    ${cards}
-                </div>
-            `;
-        }
-
-        function renderTemples() {
-            return `
-                ${renderHeader(t('temple_header'), t('temple_sub'))}
-                
-                <div class="px-6 py-6 space-y-6">
-                    <!-- Search Card -->
-                    <div class="card-premium text-center p-8 rounded-3xl animate-slide-up">
-                        <div class="w-20 h-20 bg-brand-50 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-600 animate-float shadow-inner">
-                            <i data-lucide="map" class="w-10 h-10"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900 font-serif mb-2">${t('temple_card_title')}</h3>
-                        <p class="text-gray-500 mb-8 text-sm leading-relaxed px-4">${t('temple_card_desc')}</p>
-                        
-                        <button onclick="findTemples()" class="w-full bg-brand-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-brand-200 active:scale-95 transition-transform flex items-center justify-center gap-2">
-                            <i data-lucide="navigation" class="w-5 h-5"></i>
-                            ${t('btn_locate')}
-                        </button>
-                    </div>
-
-                    <!-- Virtual Darshan -->
-                    <div class="animate-slide-up delay-100">
-                        <div class="flex items-center justify-between mb-4 px-1">
-                             <h3 class="font-bold text-gray-900 text-sm uppercase tracking-wide">${t('live_darshan')}</h3>
-                             <i data-lucide="video" class="w-4 h-4 text-red-500 animate-pulse"></i>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <a href="https://www.youtube.com/results?search_query=live+darshan+tirupati" target="_blank" class="block card-premium p-3 rounded-2xl group hover:border-brand-300">
-                                <div class="h-28 bg-gray-100 rounded-xl mb-3 bg-cover bg-center shadow-inner" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Tirumala_090615.jpg')"></div>
-                                <h5 class="font-bold text-sm text-gray-900 font-serif">Tirupati Balaji</h5>
-                                <p class="text-[10px] text-green-600 font-bold uppercase mt-1">${t('live_now')}</p>
-                            </a>
-                            <a href="https://www.youtube.com/results?search_query=live+darshan+golden+temple" target="_blank" class="block card-premium p-3 rounded-2xl group hover:border-brand-300">
-                                <div class="h-28 bg-gray-100 rounded-xl mb-3 bg-cover bg-center shadow-inner" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/94/Golden_Temple_India.jpg')"></div>
-                                <h5 class="font-bold text-sm text-gray-900 font-serif">Golden Temple</h5>
-                                <p class="text-[10px] text-green-600 font-bold uppercase mt-1">${t('live_now')}</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- Chart Generation Logic (Updated Size) ---
         function renderNorthIndianChart(placements) {
             const getP = (h) => placements[h] ? placements[h] : "";
             
             return `
-            <svg viewBox="0 0 400 200" class="w-full h-auto bg-brand-50 border border-brand-200 rounded-xl shadow-inner">
-                <!-- Borders -->
+            <svg viewBox="0 0 400 200" class="w-full h-auto bg-brand-50 border border-brand-200 rounded-2xl shadow-inner">
                 <rect x="0" y="0" width="400" height="200" fill="none" stroke="#ea7a14" stroke-width="1.5"/>
                 <line x1="0" y1="0" x2="400" y2="200" stroke="#ea7a14" stroke-width="1"/>
                 <line x1="400" y1="0" x2="0" y2="200" stroke="#ea7a14" stroke-width="1"/>
@@ -849,29 +1079,80 @@
             if (state.kundaliData) {
                 const placements = state.chartData ? state.chartData : {};
                 
+                let qaHtml = '';
+                if (state.kundaliQA && state.kundaliQA.length > 0) {
+                    qaHtml = '<div class="mt-10 space-y-6">' + state.kundaliQA.map(qa => `
+                        <div class="flex justify-end">
+                            <div class="bg-brand-50 border border-brand-200 text-gray-800 p-4 md:p-5 rounded-[1.5rem] rounded-tr-md text-sm md:text-base font-medium shadow-sm max-w-[85%]">${qa.q}</div>
+                        </div>
+                        <div class="flex justify-start">
+                            <div class="bg-gray-50 border border-gray-200 p-5 md:p-6 rounded-[1.5rem] rounded-tl-md text-sm md:text-base shadow-sm max-w-[95%] prose prose-sm md:prose-base leading-relaxed">${marked.parse(qa.a)}</div>
+                        </div>
+                    `).join('') + '</div>';
+                }
+
+                let qaInputHtml = '';
+                if (state.kundaliQuestionsAsked < MAX_KUNDALI_QUESTIONS) {
+                    qaInputHtml = `
+                        <form onsubmit="askKundaliQuestion(event)" class="mt-8 flex gap-3 relative z-10">
+                            <input type="text" name="question" required placeholder="${t('qa_placeholder')}" class="flex-1 px-6 py-4 bg-gray-50 border border-gray-200 rounded-full text-base focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:bg-white outline-none shadow-inner transition-all">
+                            <button type="submit" id="qa-submit-btn" class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-mystic-900 text-white rounded-full font-bold shadow-lg shadow-mystic-900/30 hover:bg-mystic-800 active:scale-95 transition-all">
+                                <i data-lucide="send" class="w-5 h-5 ml-1"></i>
+                            </button>
+                        </form>
+                    `;
+                } else {
+                    qaInputHtml = `<div class="mt-8 text-center py-4 bg-gray-50 rounded-full border border-gray-200"><p class="text-xs text-gray-500 font-bold uppercase tracking-widest">${t('qa_limit_reached')}</p></div>`;
+                }
+                
                 return `
                     ${renderHeader(t('kundali_header'), t('kundali_sub'))}
-                    <div class="px-6 py-6 animate-slide-up">
-                        <div class="card-premium p-4 mb-6 rounded-2xl flex justify-between items-center bg-indigo-50/50 border-indigo-100">
-                            <div>
-                                <p class="text-[10px] text-indigo-400 font-bold uppercase tracking-widest">${t('analysis_for')}</p>
-                                <p class="text-indigo-900 font-bold text-lg font-serif">${state.kundaliData.name}</p>
-                                <p class="text-xs text-indigo-600 font-medium">${state.kundaliData.date} • ${state.kundaliData.time}</p>
+                    <div class="px-6 py-6 animate-slide-up max-w-4xl mx-auto pb-10">
+                        <div class="bg-indigo-50/50 border border-indigo-100 p-6 md:p-8 mb-8 rounded-[2rem] flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
+                            <div class="text-center md:text-left">
+                                <p class="text-xs text-indigo-500 font-bold uppercase tracking-widest mb-1">${t('analysis_for')}</p>
+                                <p class="text-indigo-950 font-bold text-2xl md:text-3xl font-serif mb-1">${state.kundaliData.name}</p>
+                                <p class="text-sm text-indigo-600 font-medium">${state.kundaliData.date} • ${state.kundaliData.time} • ${state.kundaliData.place}</p>
                             </div>
-                            <button onclick="resetKundali()" class="text-xs bg-white text-indigo-600 px-4 py-2 rounded-xl border border-indigo-200 font-bold shadow-sm active:scale-95 transition-transform">${t('btn_new')}</button>
+                            <button onclick="resetKundali()" class="text-sm bg-white text-indigo-600 px-8 py-3 rounded-full border border-indigo-200 font-bold shadow-sm active:scale-95 transition-all hover:bg-indigo-50 hover:shadow-md w-full md:w-auto">${t('btn_new')}</button>
                         </div>
                         
-                        <div class="mb-8 p-1 bg-white rounded-2xl shadow-sm border border-brand-100">
-                             <div class="bg-brand-50/30 rounded-xl p-3 pb-5">
-                                <h4 class="text-xs text-center font-bold text-gray-400 uppercase tracking-widest mb-4 mt-1">${t('chart_title')}</h4>
-                                <div class="w-full max-w-md mx-auto">
+                        <div class="mb-10 p-2 bg-white rounded-[2.5rem] shadow-lg shadow-gray-200/50 border border-gray-100">
+                             <div class="bg-brand-50/40 rounded-[2rem] p-6 pb-8">
+                                <h4 class="text-sm text-center font-bold text-gray-500 uppercase tracking-widest mb-6 mt-2">${t('chart_title')}</h4>
+                                <div class="w-full max-w-xl mx-auto">
                                     ${renderNorthIndianChart(placements)}
                                 </div>
                              </div>
                         </div>
 
-                        <div class="prose prose-sm max-w-none bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                        <div class="prose prose-base md:prose-lg max-w-none bg-white p-8 md:p-12 rounded-[2.5rem] border border-gray-100 shadow-lg shadow-gray-200/50">
                             ${marked.parse(state.kundaliData.prediction)}
+                        </div>
+
+                        <!-- Contextual Q&A Section -->
+                        <div class="mt-12 pt-8 border-t-2 border-gray-100 relative">
+                            <div class="flex items-center gap-3 mb-2 justify-center md:justify-start">
+                                <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-600">
+                                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 text-lg uppercase tracking-wide">Astrologer Chat</h4>
+                                    <p class="text-xs text-gray-500 font-medium">You can ask ${MAX_KUNDALI_QUESTIONS - state.kundaliQuestionsAsked} more question(s) about this chart.</p>
+                                </div>
+                            </div>
+                            
+                            ${qaHtml}
+                            
+                            <div id="qa-loading" class="hidden justify-start mt-6">
+                                <div class="bg-gray-50 border border-gray-200 p-5 rounded-[1.5rem] rounded-tl-md flex gap-2 shadow-sm">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-300 animate-bounce" style="animation-delay: 0s"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-400 animate-bounce" style="animation-delay: 0.1s"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-bounce" style="animation-delay: 0.2s"></div>
+                                </div>
+                            </div>
+
+                            ${qaInputHtml}
                         </div>
                     </div>
                 `;
@@ -879,47 +1160,47 @@
 
             return `
                 ${renderHeader(t('gen_kundali_header'), t('gen_kundali_sub'))}
-                <div class="px-6 py-6 animate-slide-up">
-                    <div class="card-premium p-6 rounded-3xl mb-6 relative overflow-hidden bg-white">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-[100px] -z-0"></div>
+                <div class="px-6 py-6 animate-slide-up max-w-2xl mx-auto">
+                    <div class="bg-white p-8 md:p-10 rounded-[2.5rem] mb-6 relative overflow-hidden shadow-xl shadow-gray-200/50 border border-gray-100">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-brand-50 to-white rounded-bl-full -z-0"></div>
                         
-                        <form id="kundali-form" onsubmit="generateKundali(event)" class="space-y-5 relative z-10">
+                        <form id="kundali-form" onsubmit="generateKundali(event)" class="space-y-6 relative z-10">
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">${t('form_name')}</label>
-                                <input type="text" name="name" required class="input-field border-gray-200 focus:border-brand-500" placeholder="e.g. Rahul Sharma">
+                                <label class="block text-xs md:text-sm font-bold text-gray-500 mb-2.5 ml-2 uppercase tracking-widest">${t('form_name')}</label>
+                                <input type="text" name="name" required class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-50 outline-none transition-all text-gray-800 text-lg" placeholder="e.g. Rahul Sharma">
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">${t('form_dob')}</label>
-                                    <input type="date" name="dob" required class="input-field border-gray-200 focus:border-brand-500">
+                                    <label class="block text-xs md:text-sm font-bold text-gray-500 mb-2.5 ml-2 uppercase tracking-widest">${t('form_dob')}</label>
+                                    <input type="date" name="dob" required class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-50 outline-none transition-all text-gray-800 text-lg">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">${t('form_time')}</label>
-                                    <input type="time" name="tob" required class="input-field border-gray-200 focus:border-brand-500">
+                                    <label class="block text-xs md:text-sm font-bold text-gray-500 mb-2.5 ml-2 uppercase tracking-widest">${t('form_time')}</label>
+                                    <input type="time" name="tob" required class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-50 outline-none transition-all text-gray-800 text-lg">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-1.5 ml-1 uppercase tracking-wide">${t('form_place')}</label>
-                                <input type="text" name="place" required class="input-field border-gray-200 focus:border-brand-500" placeholder="e.g. Mumbai, India">
+                                <label class="block text-xs md:text-sm font-bold text-gray-500 mb-2.5 ml-2 uppercase tracking-widest">${t('form_place')}</label>
+                                <input type="text" name="place" required class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-50 outline-none transition-all text-gray-800 text-lg" placeholder="e.g. Mumbai, India">
                             </div>
 
-                            <button type="submit" class="w-full bg-mystic-900 text-white py-4 rounded-xl font-bold shadow-lg shadow-indigo-200 active:scale-95 transition-transform flex items-center justify-center gap-2 mt-4 text-sm">
-                                <i data-lucide="sparkles" class="w-4 h-4 text-brand-300"></i>
+                            <button type="submit" class="w-full bg-gradient-to-r from-mystic-900 to-indigo-900 hover:from-mystic-800 hover:to-indigo-800 text-white py-4.5 rounded-full font-bold shadow-xl shadow-indigo-900/20 active:scale-95 transition-all flex items-center justify-center gap-2.5 mt-8 text-lg">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-brand-300"></i>
                                 ${t('btn_generate')}
                             </button>
                         </form>
                     </div>
                     
-                    <div id="loading-state" class="hidden flex-col items-center justify-center py-20 text-center">
-                        <div class="relative w-24 h-24 mb-6">
-                            <div class="absolute inset-0 border-[6px] border-brand-100 rounded-full"></div>
-                            <div class="absolute inset-0 border-[6px] border-brand-500 rounded-full border-t-transparent animate-spin"></div>
+                    <div id="loading-state" class="hidden flex-col items-center justify-center py-24 text-center">
+                        <div class="relative w-32 h-32 mb-10">
+                            <div class="absolute inset-0 border-[8px] border-brand-50 rounded-full"></div>
+                            <div class="absolute inset-0 border-[8px] border-brand-500 rounded-full border-t-transparent animate-spin drop-shadow-md"></div>
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <i data-lucide="star" class="w-8 h-8 text-brand-500 animate-pulse"></i>
+                                <i data-lucide="star" class="w-12 h-12 text-brand-500 animate-pulse drop-shadow-sm"></i>
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif">${t('loading_title')}</h3>
-                        <p class="text-gray-400 text-sm max-w-[200px] mx-auto leading-relaxed">${t('loading_desc')}</p>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-3 font-serif">${t('loading_title')}</h3>
+                        <p class="text-gray-500 text-base max-w-[300px] mx-auto leading-relaxed">${t('loading_desc')}</p>
                     </div>
                 </div>
             `;
@@ -927,8 +1208,9 @@
 
         // --- Logic & Event Handlers ---
 
-        function bookAppointment() {
-            alert("Thank you! Please contact Pt. Brahmdatt Sharma at +91-XXXXXXXXXX to confirm your slot.");
+        function bookAppointment(panditName = '') {
+            const name = panditName ? ` with ${panditName}` : '';
+            alert(`Booking interface initiated${name}. (This is a demo action. In a real app, this would open a booking calendar/payment gateway.)`);
         }
 
         function router(route) {
@@ -946,8 +1228,8 @@
             app.style.transform = 'translateY(10px)'; 
             
             setTimeout(() => {
-                // Nav UI Update
-                document.querySelectorAll('.nav-btn').forEach(btn => {
+                // Nav UI Update (Mobile)
+                document.querySelectorAll('.nav-btn-mobile').forEach(btn => {
                     if (btn.getAttribute('data-target') === 'kundali') return;
                     const icon = btn.querySelector('svg');
                     const label = btn.querySelector('span');
@@ -962,11 +1244,11 @@
                     }
                 });
                 
-                const activeBtn = document.querySelector(`button[data-target="${route}"]`);
-                if(activeBtn && route !== 'kundali') {
-                    const activeIcon = activeBtn.querySelector('svg');
-                    const activeLabel = activeBtn.querySelector('span');
-                    const activeWrapper = activeBtn.querySelector('.nav-icon-wrapper');
+                const activeBtnMob = document.querySelector(`.nav-btn-mobile[data-target="${route}"]`);
+                if(activeBtnMob && route !== 'kundali') {
+                    const activeIcon = activeBtnMob.querySelector('svg');
+                    const activeLabel = activeBtnMob.querySelector('span');
+                    const activeWrapper = activeBtnMob.querySelector('.nav-icon-wrapper');
                     
                     if(activeIcon) {
                         activeIcon.classList.remove('text-gray-400');
@@ -977,11 +1259,22 @@
                     }
                 }
 
+                // Nav UI Update (Desktop)
+                document.querySelectorAll('.nav-btn-desktop').forEach(btn => {
+                    btn.classList.remove('bg-brand-50', 'text-brand-700', 'shadow-sm', 'border', 'border-brand-100');
+                    btn.classList.add('text-gray-600', 'hover:bg-gray-50');
+                });
+                const activeBtnDesk = document.querySelector(`.nav-btn-desktop[data-target="${route}"]`);
+                if(activeBtnDesk) {
+                    activeBtnDesk.classList.remove('text-gray-600', 'hover:bg-gray-50');
+                    activeBtnDesk.classList.add('bg-brand-50', 'text-brand-700', 'shadow-sm', 'border', 'border-brand-100');
+                }
+
                 // Render Content
                 app.style.transform = 'translateY(0)';
                 if (route === 'home') app.innerHTML = renderHome();
                 else if (route === 'jaap') app.innerHTML = renderJaap();
-                else if (route === 'vedas') app.innerHTML = renderVedas();
+                else if (route === 'pandits') app.innerHTML = renderPandits();
                 else if (route === 'temples') app.innerHTML = renderTemples();
                 else if (route === 'kundali') app.innerHTML = renderKundali();
 
@@ -1053,18 +1346,17 @@
             if(isMantraPlaying) {
                 mantraAudio.play().catch(e => console.log(e));
                 icon.setAttribute('data-lucide', 'pause');
-                icon.parentElement.classList.add('text-brand-600', 'border-brand-200');
+                icon.parentElement.classList.add('text-brand-600', 'bg-white', 'border-brand-200', 'ring-2', 'ring-brand-100', 'ring-offset-2');
                 icon.parentElement.classList.remove('text-gray-400');
             } else {
                 mantraAudio.pause();
                 icon.setAttribute('data-lucide', 'play');
-                icon.parentElement.classList.remove('text-brand-600', 'border-brand-200');
+                icon.parentElement.classList.remove('text-brand-600', 'bg-white', 'border-brand-200', 'ring-2', 'ring-brand-100', 'ring-offset-2');
                 icon.parentElement.classList.add('text-gray-400');
             }
             lucide.createIcons();
         }
 
-        // --- Meditation Logic ---
         function openMeditationSetup() {
             const overlay = document.getElementById('meditation-overlay');
             overlay.classList.remove('hidden');
@@ -1150,7 +1442,6 @@
             document.getElementById('timer-display').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
 
-        // --- API Calls ---
         async function generateKundali(e) {
             e.preventDefault();
             const form = e.target;
@@ -1228,6 +1519,8 @@
 
                 state.kundaliData = { ...data, prediction: predictionText };
                 state.chartData = chartData;
+                state.kundaliQA = [];
+                state.kundaliQuestionsAsked = 0;
                 saveState();
                 router('kundali');
 
@@ -1240,9 +1533,82 @@
             }
         }
 
+        async function askKundaliQuestion(e) {
+            e.preventDefault();
+            const form = e.target;
+            const input = form.question;
+            const question = input.value.trim();
+            if (!question) return;
+
+            // Optimistic update
+            input.disabled = true;
+            document.getElementById('qa-submit-btn').disabled = true;
+            document.getElementById('qa-loading').classList.remove('hidden');
+            document.getElementById('qa-loading').classList.add('flex');
+
+            try {
+                const langPrompt = state.language === 'hi' ? "Please generate the ENTIRE response in Hindi language." : "Please provide the response in English.";
+                
+                const prompt = `
+                    You are an expert Vedic Astrologer. I have previously generated a Kundali for the user with these details:
+                    Name: ${state.kundaliData.name}
+                    DOB: ${state.kundaliData.date}
+                    Time: ${state.kundaliData.time}
+                    Place: ${state.kundaliData.place}
+
+                    Here was your initial reading:
+                    ${state.kundaliData.prediction}
+
+                    The user is now asking a specific follow-up question regarding their chart:
+                    "${question}"
+
+                    ${langPrompt}
+                    Answer their question directly, concisely, and based strictly on the astrological implications of their provided birth details. Keep the tone spiritual and uplifting. Use plain text or light Markdown.
+                `;
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+                        'Content-Type': 'application/json',
+                        'HTTP-Referer': window.location.href, 
+                        'X-Title': 'Ananda App'
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek/deepseek-chat',
+                        messages: [
+                            { role: 'system', content: 'You are a wise and benevolent Vedic Astrologer assisting a user.' },
+                            { role: 'user', content: prompt }
+                        ]
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch answer');
+
+                const result = await response.json();
+                let answerText = result.choices[0].message.content;
+
+                state.kundaliQA.push({ q: question, a: answerText });
+                state.kundaliQuestionsAsked++;
+                saveState();
+                
+                router('kundali'); // Re-render to show new QA
+
+            } catch (error) {
+                console.error(error);
+                alert("Unable to fetch the astrological answer at this moment.");
+                input.disabled = false;
+                document.getElementById('qa-submit-btn').disabled = false;
+                document.getElementById('qa-loading').classList.add('hidden');
+                document.getElementById('qa-loading').classList.remove('flex');
+            }
+        }
+
         function resetKundali() {
             state.kundaliData = null;
             state.chartData = null;
+            state.kundaliQA = [];
+            state.kundaliQuestionsAsked = 0;
             saveState();
             router('kundali');
         }
@@ -1253,9 +1619,8 @@
                 return;
             }
 
-            const btn = document.querySelector('button[onclick="findTemples()"]');
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = '<span class="animate-spin">⏳</span> Locating...';
+            const btns = document.querySelectorAll('button[onclick="findTemples()"]');
+            btns.forEach(btn => btn.innerHTML = '<span class="animate-spin">⏳</span> Locating...');
             
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -1263,11 +1628,11 @@
                     const lng = position.coords.longitude;
                     const url = `https://www.google.com/maps/search/temples+near+me/@${lat},${lng},14z`;
                     window.open(url, '_blank');
-                    btn.innerHTML = originalContent;
+                    router('temples'); // reset buttons
                 },
                 (error) => {
                     alert("Unable to retrieve location. Please check settings.");
-                    btn.innerHTML = originalContent;
+                    router('temples'); // reset buttons
                 }
             );
         }
@@ -1279,7 +1644,7 @@
             const app = document.getElementById('app-content');
             app.innerHTML = renderHome();
             lucide.createIcons();
-            updateNavText(); // Ensure nav is translated
+            updateNavText();
             
             setTimeout(() => {
                 document.getElementById('splash').style.opacity = '0';
@@ -1289,12 +1654,18 @@
                 }, 1000);
             }, 1500);
 
-            // Set Initial Active State
-            const homeBtn = document.querySelector('.nav-btn[data-target="home"]');
-            if(homeBtn) {
-                homeBtn.querySelector('svg').classList.add('text-brand-600');
-                homeBtn.querySelector('.nav-icon-wrapper').classList.add('bg-brand-50');
-                homeBtn.querySelector('span').classList.add('text-brand-600');
+            // Set Initial Active State Mobile
+            const homeBtnMob = document.querySelector('.nav-btn-mobile[data-target="home"]');
+            if(homeBtnMob) {
+                homeBtnMob.querySelector('svg').classList.add('text-brand-600');
+                homeBtnMob.querySelector('.nav-icon-wrapper').classList.add('bg-brand-50');
+                homeBtnMob.querySelector('span').classList.add('text-brand-600');
+            }
+            // Set Initial Active State Desktop
+            const homeBtnDesk = document.querySelector('.nav-btn-desktop[data-target="home"]');
+            if(homeBtnDesk) {
+                homeBtnDesk.classList.remove('text-gray-600');
+                homeBtnDesk.classList.add('bg-brand-50', 'text-brand-700', 'shadow-sm', 'border', 'border-brand-100');
             }
         });
 
